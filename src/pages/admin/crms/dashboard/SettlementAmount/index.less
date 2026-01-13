@@ -1,0 +1,31 @@
+.blur-item:hover::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #e5f9ff, #fff);
+  // border-right: 1px solid #efefef;
+  opacity: 1;
+  transition: top 300ms ease-in-out, opacity 300ms ease-in-out, top 300ms ease-in-out, bottom 300ms ease-in-out;
+  content: '';
+}
+
+.blur-item::after {
+  position: absolute;
+  top: -100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #e5f9ff, #fff);
+  // border-right: 1px solid #efefef;
+  opacity: 1;
+  transition: top 300ms ease-in-out, opacity 300ms ease-in-out, top 300ms ease-in-out, bottom 300ms ease-in-out;
+  content: '';
+}

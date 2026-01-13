@@ -1,0 +1,213 @@
+import { ProColumns } from '@ant-design/pro-components'
+import { FormattedMessage } from '@umijs/max'
+
+import { DEFAULT_PRECISION } from '@/constants'
+import { getEnum } from '@/constants/enum'
+import { useLang } from '@/context/languageProvider'
+import { useStores } from '@/context/mobxProvider'
+import { formatNum } from '@/pages/admin/crms'
+import { cn } from '@/utils/cn'
+
+// 点击行展开的表格配置
+export const getExpandColumns = (): ProColumns<Order.BgaOrderPageListItem>[] => {
+  const { lng } = useLang()
+  const isZh = lng === 'zh-TW'
+  const { trade } = useStores()
+
+  return [
+    {
+      title: <FormattedMessage id="mt.danhao" />,
+      dataIndex: 'id',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      copyable: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 262,
+      fixed: 'left'
+    },
+    {
+      title: <FormattedMessage id="mt.pinzhong" />,
+      dataIndex: 'symbol',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 100
+    },
+    {
+      title: <FormattedMessage id="mt.fangxiang" />,
+      dataIndex: 'direction',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 100
+    },
+    {
+      title: <FormattedMessage id="mt.shuliang" />,
+      dataIndex: 'orderVolume',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 80
+    },
+    {
+      title: <FormattedMessage id="mt.jiage" />,
+      dataIndex: 'price',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 110
+    },
+    {
+      title: <FormattedMessage id="mt.shijian" />,
+      dataIndex: 'createTime',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 190
+    },
+    {
+      title: <FormattedMessage id="mt.leixing" />,
+      dataIndex: 'type',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      copyable: false,
+      valueEnum: getEnum().Enum.OrderType,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: isZh ? 120 : 170
+    },
+    {
+      title: <FormattedMessage id="mt.zhiyingzhisun2" />,
+      dataIndex: 'stopLossProfit',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      copyable: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 170,
+      renderText(text, record, index, action) {
+        return (
+          <div>
+            <span className="!text-[13px] text-primary">
+              {record?.takeProfit ? formatNum(record?.takeProfit, { precision: record.symbolDecimal || 2 }) : '--'}
+            </span>
+            <span className="dark:text-gray-95"> / </span>
+            <span className="!text-[13px] text-primary">
+              {record?.stopLoss ? formatNum(record?.stopLoss, { precision: record.symbolDecimal || 2 }) : '--'}
+            </span>
+          </div>
+        )
+      }
+    },
+    {
+      title: (
+        <>
+          <FormattedMessage id="mt.shouxufei" />
+          (USD)
+        </>
+      ),
+      dataIndex: 'handlingFees',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: isZh ? 110 : 150,
+      renderText(text, record, index, action) {
+        return <span className="!text-[13px] text-primary">{formatNum(text, { precision: DEFAULT_PRECISION })}</span>
+      }
+    },
+    {
+      title: (
+        <>
+          <FormattedMessage id="mt.kucunfei" />
+          (USD)
+        </>
+      ),
+      dataIndex: 'interestFees',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 110,
+      renderText(text, record, index, action) {
+        return <span className="!text-[13px] text-primary">{formatNum(text)}</span>
+      }
+    },
+    {
+      title: (
+        <>
+          <FormattedMessage id="mt.yingkui" />
+          (USD)
+        </>
+      ),
+      dataIndex: 'profit',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: isZh ? 120 : 140,
+      renderText(text, record, index, action) {
+        const profit: any = record.profit
+        const flag = Number(profit) > 0
+        const formatProfit = formatNum(profit)
+        return profit ? (
+          <span className={cn('!font-dingpro-medium', flag ? 'text-green' : 'text-red')}>{flag ? `+${formatProfit}` : formatProfit}</span>
+        ) : (
+          '0'
+        )
+      },
+      align: 'right',
+      fixed: 'right'
+    }
+  ]
+}

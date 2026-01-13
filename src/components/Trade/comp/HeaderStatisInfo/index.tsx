@@ -1,0 +1,231 @@
+import { CaretDownOutlined, InfoCircleOutlined, MenuUnfoldOutlined, RightOutlined } from '@ant-design/icons'
+import { FormattedMessage, useModel } from '@umijs/max'
+import { observer } from 'mobx-react'
+import { useRef, useState } from 'react'
+
+import SymbolIcon from '@/components/Base/SymbolIcon'
+import { useStores } from '@/context/mobxProvider'
+import useClickOutside from '@/hooks/useOnClickOutside'
+import SwitchPcOrWapLayout from '@/layouts/SwitchPcOrWapLayout'
+import { formatNum } from '@/utils'
+import { cn } from '@/utils/cn'
+import { getCurrentQuote } from '@/utils/wsUtil'
+
+import Futures from '../Futures'
+import Sidebar from '../Sidebar'
+
+type IProps = {
+  sidebarRef?: any
+}
+
+function HeaderStatisInfo({ sidebarRef }: IProps) {
+  const { ws, trade } = useStores()
+  const symbol = trade.activeSymbolName
+  const { openTradeSidebar, sidebarCollapsed } = useModel('global') // 交易侧边栏
+  const [showSidebar, setShowSidebar] = useState(false)
+  const symbolInfo = (trade.openSymbolNameList || []).find((item) => item?.symbol === symbol)
+  const isMarketOpen = trade.isMarketOpen(symbol)
+
+  const res: any = getCurrentQuote()
+  const color = res.percent > 0 ? 'text-green-700' : 'text-red-600'
+
+  const openSidebarRef = useRef<any>()
+  useClickOutside([openSidebarRef], () => {
+    setShowSidebar(false)
+  })
+
+  return (
+    <SwitchPcOrWapLayout
+      pcComponent={
+        <>
+          <div className="flex items-center justify-between px-[10px] py-2 border border-b border-gray-60">
+            <div className="flex items-center w-full">
+              <div className={cn('flex items-start', openTradeSidebar && !sidebarCollapsed ? 'flex-col' : 'w-[300px] flex-row')}>
+                <div
+                  className={cn('flex items-center relative xxl:top-1', {
+                    'cursor-pointer': !openTradeSidebar
+                  })}
+                  onClick={() => {
+                    setShowSidebar(true)
+                  }}
+                  ref={openSidebarRef}
+                >
+                  <SymbolIcon
+                    src={symbolInfo?.imgUrl}
+                    width={28}
+                    height={28}
+                    showMarketCloseIcon
+                    className="relative xl:top-[9px] xxl:top-0"
+                    closeIconStyle={{
+                      width: 18,
+                      height: 18
+                    }}
+                  />
+                  <div
+                    className="flex items-center"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setShowSidebar(!showSidebar)
+                    }}
+                  >
+                    <span className="pl-[6px] pr-[5px] text-base font-semibold text-gray">{symbolInfo?.alias}</span>
+                    {/* 收起侧边栏才展示箭头 */}
+                    {!openTradeSidebar && (
+                      <img
+                        src="/img/down.png"
+                        height={24}
+                        width={24}
+                        style={{ transform: showSidebar ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all 0.4s ease-in-out' }}
+                      />
+                    )}
+                  </div>
+
+                  <div
+                    className="absolute z-[100] left-0 top-[50px] rounded-b-xl rounded-tr-xl border-x border-b border-[#f3f3f3] bg-white"
+                    style={{
+                      boxShadow: '0px 2px 10px 10px rgba(227, 227, 227, 0.1)',
+                      display: showSidebar && !openTradeSidebar ? 'block' : 'none'
+                    }}
+                  >
+                    <Sidebar style={{ minWidth: 400 }} showFixSidebar={false} />
+                  </div>
+                </div>
+                <div className={cn('flex items-center', openTradeSidebar && !sidebarCollapsed ? 'mt-2' : 'pl-3')}>
+                  {res.hasQuote && (
+                    <>
+                      <span className={cn('!font-dingpro-medium text-xl', res.percent > 0 ? 'text-green-700' : 'text-red-600')}>
+                        {formatNum(res.bid)}
+                      </span>
+                      {isMarketOpen && (
+                        <span className={cn('pl-2 text-base !font-dingpro-medium', color)}>
+                          {res.percent > 0 ? `+${res.percent}%` : `${res.percent}%`}
+                        </span>
+                      )}
+                      {!isMarketOpen && !openTradeSidebar && (
+                        <span className="text-sm leading-6 px-[6px] rounded-[6px] text-red-600 bg-red-600/10 dark:text-red-650 dark:bg-red-650/10 ml-2">
+                          <FormattedMessage id="mt.xiushizhong" />
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className={cn('flex items-center flex-1', sidebarCollapsed ? 'pl-12 gap-x-12' : 'pl-10 gap-x-5')}>
+                <div className="flex flex-col">
+                  <span className="text-xs text-weak">
+                    <FormattedMessage id="mt.kai" />
+                  </span>
+                  <span className="!font-dingpro-medium text-sm text-gray">{formatNum(res.open)}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-weak">
+                    <FormattedMessage id="mt.shou" />
+                  </span>
+                  <span className="!font-dingpro-medium text-sm text-gray">{formatNum(res.close)}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-weak">
+                    <FormattedMessage id="mt.gao" />
+                  </span>
+                  <span className="!font-dingpro-medium text-sm text-gray">{formatNum(res.high)}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-weak">
+                    <FormattedMessage id="mt.di" />
+                  </span>
+                  <span className="!font-dingpro-medium text-sm text-gray">{formatNum(res.low)}</span>
+                </div>
+              </div>
+            </div>
+            {/* <div
+              onClick={() => {
+                trade.toggleSymbolFavorite()
+              }}
+              className="cursor-pointer"
+            >
+              <img width={32} height={32} alt="" src={`/img/${trade.isFavoriteSymbol ? 'star-active' : 'star'}.png`} />
+            </div> */}
+          </div>
+        </>
+      }
+      wapComponent={
+        <div className="px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div
+              className="flex cursor-pointer items-center"
+              onClick={() => {
+                sidebarRef?.current?.show()
+              }}
+            >
+              <MenuUnfoldOutlined className="mr-3 text-xl" />
+              <img width={26} height={26} alt="" src={`/img/coin-icon/${symbol}.png`} className="rounded-full" />
+              <span className="pl-[6px] pr-1 text-base font-semibold text-gray">{symbol}</span>
+              <CaretDownOutlined className="text-weak" />
+            </div>
+            <div
+              className="flex items-center"
+              onClick={() => {
+                trade.toggleSymbolFavorite()
+              }}
+            >
+              <img width={34} height={34} alt="" src={`/img/${trade.isFavoriteSymbol ? 'star-active' : 'star'}.png`} />
+            </div>
+          </div>
+          <div className="flex items-end justify-between pt-3">
+            <div className="flex flex-col">
+              <div className="flex items-baseline">
+                <span className={cn('text-[26px] font-bold', color)}>{res.close}</span>
+                <span className={cn('pl-2 text-xs font-semibold', color)}>{res.percent > 0 ? '+' + res.percent : res.percent}%</span>
+              </div>
+              <div className="mt-1 flex">
+                <Futures
+                  trigger={
+                    <div className="flex cursor-pointer items-center rounded-[4px] bg-brand/20 px-2 py-1">
+                      <InfoCircleOutlined className="text-brand" />
+                      <span className="px-1 text-xs text-brand">
+                        <FormattedMessage id="mt.heyueshuxing" />
+                      </span>
+                      <RightOutlined className="text-brand" />
+                    </div>
+                  }
+                />
+              </div>
+            </div>
+            <div className="flex">
+              <div className="flex flex-col">
+                <div className="flex">
+                  <div className="text-xs text-weak">
+                    <FormattedMessage id="mt.kai" />
+                  </div>
+                  <div className="pl-2 text-xs text-weak">{res.open}</div>
+                </div>
+                <div className="flex pt-1">
+                  <div className="text-xs text-weak">
+                    <FormattedMessage id="mt.shou" />
+                  </div>
+                  <div className="pl-2 text-xs text-weak">{res.close}</div>
+                </div>
+              </div>
+              <div className="flex flex-col pl-3">
+                <div className="flex">
+                  <div className="text-xs text-weak">
+                    <FormattedMessage id="mt.gao" />{' '}
+                  </div>
+                  <div className="pl-2 text-xs text-weak">{res.high}</div>
+                </div>
+                <div className="flex pt-1">
+                  <div className="text-xs text-weak">
+                    <FormattedMessage id="mt.di" />
+                  </div>
+                  <div className="pl-2 text-xs text-weak">{res.low}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    />
+  )
+}
+
+export default observer(HeaderStatisInfo)

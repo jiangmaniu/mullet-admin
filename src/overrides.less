@@ -1,0 +1,402 @@
+/* stylelint-disable */
+// /**高优先级全局样式文件。该文件一般专用于覆盖第三方库样式，其中所有 CSS 选择器都会附加 body 前缀以抬高优先级。**/
+
+// .ant-menu.ant-menu-sub {
+//   padding-left: 0 !important;
+// }
+
+.ant-pro-sider-logo {
+  justify-content: center !important;
+  border: none !important;
+}
+
+// .ant-pro-base-menu-vertical-collapsed .ant-menu-submenu-selected > .ant-menu-submenu-title {
+//   background-color: rgba(0, 0, 0, 0.04) !important;
+// }
+
+// .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item-selected {
+//   color: #051c2c !important;
+//   background-color: #eee !important;
+// }
+
+.ant-pro-base-menu-inline-icon,
+.ant-pro-base-menu-vertical-icon,
+.ant-pro-base-menu-vertical-item-icon {
+  width: 22px !important;
+}
+.ant-pro-base-menu-inline-item-text {
+  font-family: pf-bold !important;
+}
+
+// .ant-menu-inline .ant-menu-sub {
+//   background: transparent !important;
+// }
+// .css-dev-only-do-not-override-lsyxfx.ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover,
+// .css-dev-only-do-not-override-lsyxfx.ant-menu-light > .ant-menu:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover {
+//   background-color: transparent;
+// }
+// .css-dev-only-do-not-override-lsyxfx.ant-menu-light.ant-menu-root.ant-menu-inline,
+// .css-dev-only-do-not-override-lsyxfx.ant-menu-light > .ant-menu.ant-menu-root.ant-menu-inline,
+// .css-dev-only-do-not-override-lsyxfx.ant-menu-light.ant-menu-root.ant-menu-vertical,
+// .css-dev-only-do-not-override-lsyxfx.ant-menu-light > .ant-menu.ant-menu-root.ant-menu-vertical {
+//   border-right: none;
+// }
+
+// .ant-carousel .slick-dots li.slick-active button {
+//   background: #000000 !important;
+// }
+// .ant-carousel .slick-dots li button {
+//   background: #6a7073 !important;
+// }
+
+.ant-pagination-item.ant-pagination-item-active,
+.ant-pagination:not(.ant-pagination-disabled) .ant-pagination-item:not(.ant-pagination-item-active):hover {
+  background: var(--btn-primary) !important;
+}
+.ant-pagination:not(.ant-pagination-disabled) .ant-pagination-item:not(.ant-pagination-item-active):hover a {
+  color: #fff !important;
+}
+.ant-pagination .ant-pagination-item-active a {
+  color: #fff !important;
+}
+
+.ant-pagination .ant-pagination-item,
+.ant-pagination.ant-table-pagination .ant-pagination-prev {
+  margin-right: 8px !important;
+}
+.ant-pagination:not(.ant-pagination-disabled) .ant-pagination-item:not(.ant-pagination-item-active) {
+  border: 1px solid #efefef !important;
+}
+.ant-pagination .ant-pagination-next,
+.ant-pagination .ant-pagination-prev {
+  border: 1px solid #efefef !important;
+}
+// .ant-pagination .ant-pagination-item-link {
+//   margin-top: -2px;
+// }
+
+.table-even {
+  background: #fbfbfb;
+  .ant-table-cell-fix-left,
+  .ant-table-cell-fix-right {
+    background: #fbfbfb !important;
+  }
+}
+.table-odd {
+  background: #fff;
+}
+
+.no-table-bordered {
+  .ant-table-wrapper .ant-table-tbody > tr > td {
+    border-bottom: none !important;
+  }
+}
+
+// 修复在弹窗中搜索表单样式问题
+.table-in-modal {
+  .ant-pro-query-filter-row {
+    align-items: end !important;
+  }
+  .ant-form {
+    margin-bottom: 30px !important;
+    background: white !important;
+  }
+}
+
+.ant-modal-wrap.modal-no-padding .ant-modal-content {
+  padding: 0;
+  .ant-modal-header {
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .ant-modal-footer {
+    padding: 20px;
+  }
+  .ant-modal-close {
+    top: 24px !important;
+  }
+  .ant-modal-close {
+    width: 26px !important;
+    height: 26px !important;
+  }
+}
+
+// .phoneSelect .ant-input-group-addon {
+//   background-color: #fff !important;
+// }
+
+// .ant-layout-sider-children {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+// }
+
+// 隐藏Tabbar下划线
+.custom-tabbar .ant-tabs-ink-bar {
+  visibility: hidden;
+}
+// 隐藏tabbar底部边框线
+.hide-tabbar-border {
+  .ant-tabs-nav::before {
+    border-bottom: none !important;
+  }
+}
+
+// antd message 样式修改
+.custom-message-wrapper {
+  .ant-message-notice-content {
+    padding: 11px 42px !important;
+    background: rgba(1, 1, 1, 0.6) !important;
+    border-radius: 29px !important;
+  }
+  .ant-message-custom-content {
+    color: #fff !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+  }
+}
+
+// .ant-typography-copy {
+//   color: #6a7073 !important;
+// }
+
+// .adm-tabs-tab-active {
+//   color: #051c2c !important;
+// }
+
+// .adm-tabs {
+//   --active-line-color: #051c2c !important;
+//   --active-title-color: #051c2c !important;
+// }
+
+// 菜单字体
+@media (max-width: 768px) {
+  .ant-pro-base-menu-inline-item-text,
+  .ant-menu-title-content {
+    font-size: 16px !important;
+  }
+  .pc-popup-menu {
+    .ant-menu-item,
+    .ant-menu-submenu-title {
+      margin-bottom: 12px !important;
+      padding-left: 10px !important;
+    }
+    .ant-menu {
+      border-right: none !important;
+    }
+  }
+}
+
+// 修改投影
+.ant-pro-card-hoverable:hover {
+  box-shadow: 0 1px 2px -2px #00000029, 0 3px 6px #0000001f, 0 5px 12px -50px #00000017 !important;
+}
+
+// 导出按钮宽度
+.export-btn .ant-btn-icon {
+  width: 20px !important;
+}
+
+// 按钮间距隐藏没用的元素
+.standard-table .ant-form-item-no-colon {
+  display: none !important;
+}
+
+.standard-table {
+  // 表格按钮靠近左边
+  .ant-form-item-control-input-content {
+    text-align: left !important;
+  }
+}
+
+// 滑块颜色
+.adm-slider-fill {
+  background-color: #051c2c !important;
+}
+
+.adm-center-popup-close.adm-plain-anchor {
+  color: #051c2c;
+}
+
+// 按钮颜色，覆盖antd按钮颜色
+// .ant-btn-primary {
+//   background: var(--btn-primary) !important;
+// }
+// .ant-btn-default {
+//   &:hover {
+//     color: var(--btn-primary) !important;
+//     border-color: var(--btn-primary) !important;
+//     svg {
+//       fill: var(--color-brand-primary) !important;
+//     }
+//   }
+// }
+// 修改默认按钮悬停效果
+.ant-btn-default {
+  &:hover {
+    color: var(--color-text-primary) !important;
+    background-color: hsla(0, 0%, 97%, 0.7) !important;
+    border-color: #d9d9d9 !important;
+  }
+}
+
+// 搜索栏元素设置对齐方式
+.custom-search-form-item {
+  .ant-space-align-center {
+    width: 100%;
+    .ant-space-item {
+      width: 100%;
+      & > div:first-child {
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+  }
+}
+
+// 侧边栏菜单图标大小
+.ant-pro-base-menu-inline-item-icon,
+.ant-pro-base-menu-vertical-item-icon {
+  svg {
+    width: 22px;
+    height: 23px;
+  }
+}
+
+.ant-switch.ant-switch-checked {
+  background: var(--color-brand-primary) !important;
+}
+
+// 按钮禁用样式
+.ant-btn-primary:disabled {
+  color: #6a7073 !important;
+  background: #efefef !important;
+}
+
+// 修改select、input size为lg的组件字体大小
+.ant-select-lg,
+.ant-select-lg .ant-select-selector,
+.ant-input-affix-wrapper-lg,
+.ant-input-lg,
+.ant-input-number-lg {
+  font-size: 14px !important;
+}
+.ant-input-affix-wrapper-lg {
+  padding-top: 8.5px !important;
+  padding-bottom: 8.5px !important;
+}
+.ant-input-group-wrapper-lg {
+  padding-top: 1.5px !important;
+  padding-bottom: 1.5px !important;
+}
+
+.ant-select-tree-treenode-active .ant-select-tree-node-content-wrapper {
+  outline: none !important;
+}
+
+// 修改树形结构多选样式
+.ant-select-tree-checkbox-checked .ant-select-tree-checkbox-inner {
+  background: var(--color-brand-primary) !important;
+}
+.ant-select-tree-checkbox-indeterminate .ant-select-tree-checkbox-inner:after {
+  background: var(--color-brand-primary) !important;
+}
+
+// 修改菜单样式
+.ant-layout-sider {
+  .ant-menu-item:not(.ant-menu-item-selected):active {
+    background: rgba(0, 0, 0, 0.03) !important;
+  }
+  .ant-menu-submenu-title:active {
+    background: rgba(0, 0, 0, 0.03) !important;
+  }
+}
+
+.ant-tree .ant-tree-checkbox-disabled .ant-tree-checkbox-inner:after {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.ant-dropdown-menu .ant-dropdown-menu-item.ant-dropdown-menu-item-danger:not(.ant-dropdown-menu-item-disabled):hover {
+  color: var(--color-red-600) !important;
+  background-color: #ff4d4f0f !important;
+}
+
+.ant-typography-copy {
+  color: var(--color-text-primary) !important;
+  &:hover {
+    color: #1677ff !important;
+  }
+}
+
+.ant-app {
+  height: 100%;
+}
+
+// 去掉输入框outline
+input:focus {
+  outline: none !important;
+}
+
+// 隱藏的表單項
+.hide-form-item {
+  .ant-form-item-control-input {
+    display: none !important;
+  }
+}
+/* 自定义树形组件样式 */
+.custom-tree {
+  .ant-tree-node-content-wrapper:hover {
+    // background-color: transparent !important; /* 不设置鼠标悬停的背景色 */
+  }
+
+  /* 没有兄弟节点 ant-tree-checkbox 的 ant-tree-switcher-noop */
+  .ant-tree-switcher-noop:not(:has(+ .ant-tree-checkbox)) {
+    // margin-right: 4px;
+  }
+
+  /* 有兄弟节点 ant-tree-checkbox 的 ant-tree-switcher-noop */
+  .ant-tree-switcher-noop:has(+ .ant-tree-checkbox) {
+    margin-right: 4px;
+  }
+
+  /* 为 ant-tree-switcher-noop 的兄弟节点 ant-tree-checkbox 添加右边距 */
+  .ant-tree-switcher-noop + .ant-tree-checkbox {
+    margin-right: 4px;
+  }
+
+  /* 自定义 checkbox 位置 */
+  .ant-tree-node-content-wrapper {
+    display: flex;
+    // flex-direction: row-reverse; /* 调整复选框位置 */
+  }
+
+  .ant-tree-treenode {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ant-tree-node-content-wrapper {
+    flex-direction: row;
+  }
+
+  /* 只调整父节点的 checkbox 位置 */
+  // .ant-tree-treenode[aria-expanded]:not(.ant-tree-treenode-leaf) > .ant-tree-checkbox {
+  //   order: 1; /* 将 checkbox 放到末尾 */
+  //   margin-left: auto; /* 让 checkbox 靠右对齐 */
+  // }
+}
+
+// 去掉tabs的focus样式
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-focus .ant-tabs-tab-btn {
+  outline: none !important;
+}
+
+body .position-table-expand-row .ant-table-cell-fix-left,
+body .position-table-expand-row .ant-table-cell-fix-right {
+  background: #f7f7f7 !important;
+}
+body .position-table-expand-row .ant-table-cell-row-hover {
+  background: #f7f7f7 !important;
+}

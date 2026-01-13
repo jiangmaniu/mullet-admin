@@ -1,0 +1,9 @@
+{
+  "name": "Lynfoo",
+  "websiteUrl": "www.lynfoo.com",
+  "CLIENT_ID": "trade-pc-manager",
+  "CLIENT_SECRET": "trade-pc-manager-secret",
+  "ws": "wss://websocket.lynfoocn.com:443/websocketServer",
+  "imgDomain": "https://file.lynfoocn.com/trade/",
+  "HIDE_SWITCH_LANGUAGE": false
+}

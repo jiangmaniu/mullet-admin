@@ -1,0 +1,311 @@
+import { FormattedMessage, getIntl, useIntl } from '@umijs/max'
+import classNames from 'classnames'
+
+import { IStandardTableProps } from '@/components/Admin/StandardTable'
+import { getEnum } from '@/constants/enum'
+import { getAccountGroupPageList } from '@/services/api/tradeCore/accountGroup'
+import { push } from '@/utils/navigator'
+
+export default (): IStandardTableProps<
+  TradeFollowFollower.TradeFollowFollowerOrderItem,
+  TradeFollowFollower.TradeFollowFollowerOrderParams
+> => ({
+  showOptionColumn: true,
+  opColumnWidth: 80,
+  tableExtraRender: () => {
+    // 占位符
+    return <div className="h-[30px]"></div>
+  },
+  renderOptionColumn: (record) => {
+    return (
+      <a
+        className="!text-primary font-medium text-sm cursor-pointer"
+        onClick={() => {
+          push(`/copy-trading/list/view/${record.id}?key=history`)
+        }}
+      >
+        <FormattedMessage id="common.chakan" />
+      </a>
+    )
+  },
+  columns: [
+    {
+      title: <FormattedMessage id="mt.yonghuuid" />, // 与 antd 中基本相同，但是支持通过传入一个方法
+      dataIndex: 'tradeAccountId1',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      fixed: 'left',
+      width: 200,
+      fieldProps: {},
+      renderText(text, record, index, action) {
+        return record.tradeAccountId
+      }
+    },
+    {
+      title: <FormattedMessage id="mt.zhanghuleixing" />,
+      dataIndex: 'type',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 160
+    },
+    {
+      title: <FormattedMessage id="mt.jiaoyizhanghu" />,
+      dataIndex: 'tradeAccountId',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      copyable: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 200
+    },
+    {
+      title: <FormattedMessage id="mt.dingdanhao" />,
+      dataIndex: 'id',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      copyable: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 200
+    },
+    {
+      title: <FormattedMessage id="mt.xiangmumingcheng" />,
+      dataIndex: 'name',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        precision: 2,
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 160
+    },
+    {
+      title: <FormattedMessage id="mt.fangxiang" />,
+      dataIndex: 'tradeBuySell',
+      valueEnum: getEnum().Enum.TradeBuySell,
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 140
+    },
+    {
+      title: <FormattedMessage id="mt.daidanhao" />,
+      dataIndex: 'id',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      copyable: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 200
+    },
+
+    {
+      title: <FormattedMessage id="mt.jiaoyiliang" />,
+      dataIndex: 'orderVolume',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        precision: 2,
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 160
+    },
+
+    {
+      title: <FormattedMessage id="mt.pingcangjia" />,
+      dataIndex: 'tradePrice',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        precision: 2,
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 140
+    },
+    {
+      title: <FormattedMessage id="mt.kaicangjia" />,
+      dataIndex: 'startPrice',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        precision: 2,
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 140
+    },
+    {
+      title: <FormattedMessage id="mt.yingkui" />,
+      dataIndex: 'profit',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 140,
+      renderText(text, record, index, action) {
+        const profit = Number(record.profit || 0)
+        return profit ? (
+          <span className={classNames('font-semibold', profit > 0 ? 'text-green' : 'text-red')}>{profit > 0 ? '+' + profit : profit}</span>
+        ) : (
+          '‑‑'
+        )
+      }
+    },
+    {
+      title: <FormattedMessage id="mt.gendanrenshu" />,
+      dataIndex: 'num',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 140
+    },
+    {
+      title: <FormattedMessage id="mt.fenrunjine" />,
+      dataIndex: 'orderVolume',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 160
+    },
+    {
+      title: <FormattedMessage id="mt.yishixianyingkui" />,
+      dataIndex: 'orderVolume',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        precision: 2,
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 160
+    },
+    {
+      title: <FormattedMessage id="mt.kaishishijian" />,
+      dataIndex: 'createTime',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 200
+    },
+    {
+      title: <FormattedMessage id="mt.jieshushijian" />,
+      dataIndex: 'createTime',
+      hideInSearch: true, // 在 table的查询表单 中隐藏
+      ellipsis: false,
+      fieldProps: {
+        placeholder: ''
+      },
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      width: 200
+    },
+
+    // 表单搜索项
+    {
+      dataIndex: 'dateRange',
+      filters: true, // 表头的筛选菜单项，当值为 true 时，自动使用 valueEnum 生成
+      onFilter: true, //筛选表单，为 true 时使用 ProTable 自带的，为 false 时关闭本地筛选
+      valueType: 'dateRange', // 值的类型,会生成不同的渲染器
+      hideInSearch: false,
+      hideInTable: true,
+      fieldProps: {
+        placeholder: [useIntl().formatMessage({ id: 'common.startDate' }), useIntl().formatMessage({ id: 'common.endDate' })]
+      }
+    },
+    {
+      dataIndex: 'name',
+      hideInTable: true,
+      hideInSearch: false,
+      formItemProps: {
+        label: '' // 去掉form label
+      },
+      fieldProps: {
+        placeholder: useIntl().formatMessage({ id: 'mt.sousuouid' })
+      }
+    },
+    {
+      dataIndex: 'accountGroupId',
+      filters: true, // 表头的筛选菜单项，当值为 true 时，自动使用 valueEnum 生成
+      onFilter: true, //筛选表单，为 true 时使用 ProTable 自带的，为 false 时关闭本地筛选
+      valueType: 'select', // 值的类型,会生成不同的渲染器
+      hideInSearch: false,
+      hideInTable: true,
+      request: async () => {
+        const data = await getAccountGroupPageList({ current: 1, size: 999 })
+        return (data.data?.records || []).filter((v) => !v.isSimulate).map((item) => ({ label: item.groupName, value: item.id }))
+      },
+      fieldProps: {
+        placeholder: getIntl().formatMessage({ id: 'mt.zhanghuleixing' })
+      }
+    },
+    {
+      dataIndex: 'accountId',
+      filters: true, // 表头的筛选菜单项，当值为 true 时，自动使用 valueEnum 生成
+      onFilter: true, //筛选表单，为 true 时使用 ProTable 自带的，为 false 时关闭本地筛选
+      hideInSearch: false,
+      hideInTable: true,
+      fieldProps: {
+        placeholder: useIntl().formatMessage({ id: 'mt.jiaoyizhanghao' })
+      }
+    }
+  ]
+})

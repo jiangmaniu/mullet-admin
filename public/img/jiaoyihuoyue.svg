@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 45备份</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="CRM运营管理" transform="translate(-603.000000, -242.000000)">
+            <g id="编组-28备份" transform="translate(591.000000, 217.000000)">
+                <g id="编组-45备份" transform="translate(12.000000, 25.000000)">
+                    <rect id="矩形" x="0" y="0" width="40" height="40"></rect>
+                    <g id="编组" transform="translate(9.000000, 9.000000)" stroke="#051C2C" stroke-linejoin="round" stroke-width="2.21052632">
+                        <path d="M11,14.3684211 C14.64507,14.3684211 17.6,11.3120368 17.6,7.54181842 L17.6,0 L4.4,0 L4.4,7.54181842 C4.4,11.3120368 7.35493,14.3684211 11,14.3684211 Z" id="路径"></path>
+                        <path d="M4.4,9.39473684 L4.4,3.86842105 L0,3.86842105 C0,7.55265 2.2,9.39473684 4.4,9.39473684 Z" id="路径" stroke-linecap="round"></path>
+                        <path d="M17.6,9.39473684 L17.6,3.86842105 L22,3.86842105 C22,7.55265 19.8,9.39473684 17.6,9.39473684 Z" id="路径" stroke-linecap="round"></path>
+                        <line x1="11" y1="15.4736842" x2="11" y2="17.6842105" id="路径" stroke-linecap="round"></line>
+                        <polygon id="路径" points="6.05 21 8.0795 17.6842105 13.773375 17.6842105 15.95 21"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

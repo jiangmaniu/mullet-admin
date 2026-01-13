@@ -1,0 +1,149 @@
+## Node 版本
+
+> v20.10.0
+
+全局安装 `pnpm`
+
+```bash
+npm i -g pnpm
+```
+
+## 安装依赖
+
+```
+pnpm install
+```
+
+## 本地开发启动
+
+**环境变量**
+
+- `.env-conf/mullet`  mullet 平台环境变量
+- `.env-conf/.env.lynfoo.prod` lynfoo 平台环境变量
+
+```bash
+# mullet
+# 开发阶段的环境
+"dev:mullet:dev": "REACT_APP_ENV=dev MOCK=none UMI_ENV=dev env-cmd -f .env-conf/mullet/.env.mullet.dev max dev",
+# 测试阶段的环境
+"dev:mullet:test": "REACT_APP_ENV=dev MOCK=none UMI_ENV=dev env-cmd -f .env-conf/mullet/.env.mullet.test max dev",
+# 线上阶段的环境
+"dev:mullet:prod": "REACT_APP_ENV=dev MOCK=none UMI_ENV=dev env-cmd -f .env-conf/mullet/.env.mullet.prod max dev",
+# lynfoo 线上阶段的环境
+"dev:lynfoo:prod": "REACT_APP_ENV=dev MOCK=none UMI_ENV=dev env-cmd -f .env-conf/.env.lynfoo.prod max dev",
+
+# 启动本地mock服务，用于快速没有服务的情况下联调接口字段 配置根目录下 mock/xx 来使用
+pnpm start:mock
+```
+
+## 打包部署
+
+### 打包
+
+```bash
+pnpm build
+```
+
+打包成功目录是`dist`，把`dist`下的静态资源部署即可
+
+> 配置 Nginx 接口代理
+
+```bash
+server {
+  # 监听端口
+  listen 8000;
+  # 监听地址
+  server_name 127.0.0.1;
+
+  # 静态资源
+  location / {
+    # 静态资源位置
+    root /usr/share/nginx/html;
+    # 设置默认页
+    index index.html;
+    # 重要：访问页面404重定向到index.html
+    try_files $uri $uri/ /index.html;
+  }
+
+  # baseURL接口转发
+  location ~ /api/ {
+    proxy_set_header  X-Real-IP $remote_addr;
+    proxy_set_header  X-Forwarded-Proto https;
+    proxy_set_header  X-Forwarded-For $remote_addr;
+    proxy_set_header  X-Forwarded-Host $remote_addr;
+    # 代理到后台接口服务
+    proxy_pass http://api.mcp.lan;
+  }
+}
+```
+
+**关于分支说明**
+
+- 开发提交分支 `dev`
+- 正式环境分支 `main`（发版需合并`dev`到`main`）
+
+## 提交代码规范
+
+> 使用.husky 来规范提交代码
+
+**按 git commit 提交规范，否则限制代码提交**
+
+- feat：新功能
+- fix：修复 bug
+- docs：仅仅修改了文档，比如 README、CHANGELOG 等
+- style：不影响代码含义的改动，比如去掉空格、改变缩进、增删分号等
+- refactor：既不新增功能，也不是修复 bug 的代码改动
+- perf：提高代码性能的改动
+- test：添加或修改代码的测试
+- build：构建系统或外部依赖项的更改
+- ci：持续集成的配置文件和脚本的修改
+- chore：不修改 src 或 test 的其他修改，比如构建过程或辅助工具的变动
+
+**使用 cz 更方便**
+
+```bash
+# 执行触发lint-staged执行lint规范检查
+pnpm cz
+```
+
+## 安装 vscode 插件，规范化代码
+
+> 项目中配置了对应的 lint 插件，结合 vscode 插件保存代码格式化
+
+- Prettier - Code formatter
+- i18n Ally
+- ESLint
+- stylelint
+- EditorConfig for VS Code
+- Tailwind CSS IntelliSense
+- Tailwind Docs
+- px to rem & rpx & vw (cssrem)
+
+## 关于菜单权限配置
+
+1. 在`config/routes.ts`定义菜单编码 `code`
+
+```json
+{
+  "path": "/:lng/asset/supplier-report",
+  "component": "./admin/asset/supplierReport",
+  "name": "supplier-report",
+  "access": "canAdmin", // 权限配置
+  "code": "asset:supplier-report" // 需要与后台配置的菜单编号code一致
+}
+```
+
+2. 在服务端新建菜单，编码和本地定义的 `code` 一致，菜单别名和本地定义的`name`一致
+
+![](./docs/菜单定义说明.png)
+
+> 菜单按钮权限处理逻辑在 `src/access.ts`
+> 菜单过滤逻辑在`utils/menu.ts`
+
+## 主题变量使用注意事项
+
+- 不要使用 `text-gray-xx` `bg-gray-xx` `border-gray-xx` 改变颜色，否则不好统一管理切换主题，尽量使用 css 变量来管理。
+  - 切换黑色主题时，如遇到特殊情况，使用`dark`来改变主题，例如 `dark:bg-gray-xx`， 其他大部分情况使用 css 变量
+  - 如果公用颜色变量，使用 css 变量来管理
+- 使用`src/theme/theme.config`中的 css 变量
+- 使用 tailwindcss `src/theme.tailwind` 自定义快捷类名，具备语义化 `text-primary`(正文) `text-secondary`(次描述文 1) `text-weak`(次描述文 2) `text-brand`（文字品牌主色） 改变文字颜色，或者结合 css 变量使用 `bg-[var(--btn-primary)]`有颜色提示，`bg-[--btn-primary]`没有颜色提示

@@ -1,0 +1,9 @@
+{
+  "name": "Mullet",
+  "websiteUrl": "www.mullet.top",
+  "CLIENT_ID": "trade-pc-manager",
+  "CLIENT_SECRET": "trade-pc-manager-secret",
+  "ws": "wss://websocket.mullet.top/websocketServer",
+  "imgDomain": "https://file.mullet.top/trade/",
+  "HIDE_SWITCH_LANGUAGE": false
+}

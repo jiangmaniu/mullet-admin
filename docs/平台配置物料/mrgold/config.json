@@ -1,0 +1,9 @@
+{
+  "name": "明瑞金业",
+  "websiteUrl": "www.qawfadwd.xyz",
+  "CLIENT_ID": "trade-pc-manager",
+  "CLIENT_SECRET": "trade-pc-manager-secret",
+  "ws": "wss://websocket.qawfadwd.xyz/websocketServer",
+  "imgDomain": "https://file.qawfadwd.xyz/trade/",
+  "HIDE_SWITCH_LANGUAGE": true
+}

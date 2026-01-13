@@ -1,0 +1,71 @@
+.click-effect {
+  position: relative;
+}
+
+// .click-effect::after {
+//   position: absolute;
+//   bottom: -90%;
+//   left: -90%;
+//   width: 0;
+//   height: 0;
+//   background: linear-gradient(to top right, #333, #333);
+//   transform: rotate(30deg);
+//   content: '';
+// }
+
+// .click-effect:hover::after {
+//   animation: fill 350ms ease-in-out forwards;
+//   animation-delay: 100ms;
+// }
+
+@keyframes fill {
+  0% {
+    width: 0;
+    height: 0;
+  }
+
+  100% {
+    width: 300%;
+    height: 300%;
+  }
+}
+
+.hover-effect {
+  border: 1px solid #f0f0f0;
+}
+
+.hover-effect:hover {
+  animation: hoverEffect 350ms ease-in-out forwards;
+}
+
+@keyframes hoverEffect {
+  0% {
+    border: 1px solid #f0f0f0;
+    // box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    transform: translate(0, 0);
+  }
+  100% {
+    border: 1px solid #333;
+    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translate(-1px, -2px);
+  }
+}
+
+// 子元素的 hover 效果
+
+.click-effect-item .go-to-detail {
+  opacity: 0;
+}
+
+.click-effect-item:hover .go-to-detail {
+  animation: show 350ms ease-in-out forwards;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
