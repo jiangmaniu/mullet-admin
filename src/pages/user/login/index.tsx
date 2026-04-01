@@ -2,7 +2,7 @@
 import { LoginForm, ProFormText } from '@ant-design/pro-components'
 import { useEmotionCss } from '@ant-design/use-emotion-css'
 import { FormattedMessage, useIntl, useModel, useSearchParams } from '@umijs/max'
-import { md5 } from 'js-md5'
+import { encrypt } from '@/utils/sm2'
 import { useEffect, useState } from 'react'
 import { flushSync } from 'react-dom'
 
@@ -69,8 +69,8 @@ function Login() {
       const result = await login(
         {
           username: values.username?.trim(),
-          password: md5(values.password as string),
-          tenanId: '000000',
+          password: encrypt(values.password as string),
+          tenanId: '888888',
           type: 'account',
           grant_type: 'captcha',
           scope: 'all'

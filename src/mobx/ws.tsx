@@ -477,7 +477,7 @@ class WSStore {
     this.sendWorkerMessage({
       type: 'SUBSCRIBE_TRADE',
       data: {
-        topic: `/000000/trade/${accountId}`,
+        topic: `/888888/trade/${accountId}`,
         cancel
       }
     })

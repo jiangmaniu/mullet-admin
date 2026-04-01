@@ -134,7 +134,8 @@ export const errorConfig: RequestConfig = {
       const headers: any = {
         'Content-Type': 'x-www-form-urlencoded',
         Language: getLocaleForBackend(),
-        'Tenant-Id': '000000', // 默认的租户ID
+        'Tenant-Id': '888888', // 默认的租户ID
+        'Blade-Requested-With': 'BladeHttpRequest',
         ...config.headers
       }
 

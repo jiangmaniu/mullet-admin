@@ -53,3 +53,5 @@ build
 *.zip
 *.tar.gz
 *.tgz
+
+.agent
