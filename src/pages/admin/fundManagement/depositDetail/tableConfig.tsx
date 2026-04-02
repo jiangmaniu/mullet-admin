@@ -1,29 +1,14 @@
 import { ProColumns } from '@ant-design/pro-components'
 import { useIntl } from '@umijs/max'
-import { Button, Tag, Tooltip, Typography } from 'antd'
+import { Tag, Tooltip, Typography } from 'antd'
 import dayjs from 'dayjs'
 
 import { DepositDetailRecord, FilterOption, StatusOption } from '@/services/api/fundManagement'
 import { formatNum } from '@/utils'
 import { formatAddress, formatTxHash, renderFallback } from '@/utils/format'
 
-/**
- * 根据 uiStatus 获取状态颜色
- */
-const getStatusColor = (uiStatus: string): string => {
-  switch (uiStatus) {
-    case 'SUCCESS':
-      return 'success'
-    case 'FAIL':
-      return 'error'
-    case 'WAIT':
-      return 'warning'
-    case 'RECEIPT':
-      return 'processing'
-    default:
-      return 'default'
-  }
-}
+import DetailDrawer from './components/DetailDrawer'
+import { getStatusColor, getStatusLabel } from './utils'
 
 /**
  * 获取入金明细表格列配置
@@ -174,10 +159,8 @@ export const getColumns = (options: {
         placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.statusPlaceholder' }) // 請選擇狀態
       },
       render: (_, record) => {
-        const statusOption = options.statuses.find((s) => s.value === record.status)
-        const statusText = statusOption?.label || record.status
-        const statusColor = statusOption ? getStatusColor(statusOption.uiStatus) : 'default'
-        return <Tag color={statusColor}>{renderFallback(statusText)}</Tag>
+        const statusText = getStatusLabel(record.status, intl) || record.status
+        return <Tag color={getStatusColor(record.status)}>{renderFallback(statusText)}</Tag>
       }
     },
     {
@@ -205,22 +188,18 @@ export const getColumns = (options: {
       )
     },
     {
-      title: '操作',
+      title: intl.formatMessage({ id: 'common.op' }),
       dataIndex: 'action',
       width: 100,
       fixed: 'right',
       hideInSearch: true,
       render: (_, record) => (
-        <Button
-          type="link"
-          size="small"
-          onClick={() => {
-            console.log('查看详情:', record)
-            // TODO: 实现查看详情逻辑
-          }}
-        >
-          查看
-        </Button>
+        <DetailDrawer
+          trigger={
+            <a style={{ fontSize: 12 }}>{intl.formatMessage({ id: 'common.chakan' })}</a>
+          }
+          record={record}
+        />
       )
     }
   ]

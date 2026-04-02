@@ -7,12 +7,18 @@ export default {
     userId: 'User ID',
     tradeAccountId: 'Account ID',
     fromAddress: 'From Address',
+    toAddress: 'To Address',
     fromChain: 'From Chain',
+    fromChainLabel: 'Chain',
     fromToken: 'From Token',
     fromAmount: 'From Amount',
     txHash: 'Transaction Hash',
     status: 'Order Status',
     createdAt: 'Created At',
+
+    // Drawer
+    drawerTitle: 'Deposit Order Detail',
+    onChainInfo: 'On-chain Info',
 
     // Buttons
     supplementOrder: 'Supplement Order',

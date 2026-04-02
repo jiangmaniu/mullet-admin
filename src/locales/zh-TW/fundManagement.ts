@@ -7,12 +7,18 @@ export default {
     userId: '用戶ID',
     tradeAccountId: '賬戶ID',
     fromAddress: '發起地址',
+    toAddress: '接收地址',
     fromChain: '發起網絡',
+    fromChainLabel: '鏈網絡',
     fromToken: '發起幣種',
     fromAmount: '發起數額',
     txHash: '交易哈希',
     status: '訂單狀態',
     createdAt: '創建時間',
+
+    // 抽屉
+    drawerTitle: '入金單明細',
+    onChainInfo: '鏈上信息',
 
     // 按钮
     supplementOrder: '補單',

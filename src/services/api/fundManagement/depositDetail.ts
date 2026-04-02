@@ -52,6 +52,8 @@ export interface DepositDetailRecord {
   tradeAccountId: string
   /** 发起地址 */
   fromAddress: string
+  /** 接收地址 */
+  toAddress?: string
   /** 发起链 */
   fromChain: string
   /** 发起币种 */
