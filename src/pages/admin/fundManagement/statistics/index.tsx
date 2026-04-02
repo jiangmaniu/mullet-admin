@@ -53,16 +53,17 @@ export default function Statistics() {
 
   // 获取出入金统计数据
   const {
-    data: apiData,
-    loading,
+    data: apiResponse,
+    loading: isLoading,
     error
-  } = useRequest(() => getFundOverview(requestParams), {
-    refreshDeps: [requestParams]
-  })
+  } = useRequest(() => getFundOverview(requestParams), { refreshDeps: [requestParams] })
+
+  // 提取实际数据
+  const apiData = apiResponse?.data
 
   // 转换统计卡片数据
   const statisticData = useMemo(() => {
-    if (!apiData?.data) {
+    if (!apiData) {
       return {
         todayDeposit: {
           title: intl.formatMessage({ id: 'fundManagement.statistics.todayDeposit' }), // 今日入金
@@ -95,32 +96,32 @@ export default function Statistics() {
       }
     }
 
-    const { todaySummary, allTimeSummary } = apiData.data
+    const { todaySummary, allTimeSummary } = apiData
     return {
       todayDeposit: {
         title: intl.formatMessage({ id: 'fundManagement.statistics.todayDeposit' }), // 今日入金
-        value: todaySummary.deposit.totalDisplay,
+        value: Number(todaySummary.deposit.totalDisplay),
         unit: 'USDC',
         change: todaySummary.deposit.changePercent,
         changeType: (todaySummary.deposit.changeDirection || 'unchanged') as 'up' | 'down' | 'unchanged'
       },
       todayWithdrawal: {
         title: intl.formatMessage({ id: 'fundManagement.statistics.todayWithdrawal' }), // 今日出金
-        value: todaySummary.withdrawal.totalDisplay,
+        value: Number(todaySummary.withdrawal.totalDisplay),
         unit: 'USDC',
         change: todaySummary.withdrawal.changePercent,
         changeType: (todaySummary.withdrawal.changeDirection || 'unchanged') as 'up' | 'down' | 'unchanged'
       },
       totalDeposit: {
         title: intl.formatMessage({ id: 'fundManagement.statistics.totalDeposit' }), // 累計入金
-        value: allTimeSummary.deposit.totalDisplay,
+        value: Number(allTimeSummary.deposit.totalDisplay),
         unit: 'USDC',
         change: allTimeSummary.deposit.changePercent,
         changeType: (allTimeSummary.deposit.changeDirection || 'unchanged') as 'up' | 'down' | 'unchanged'
       },
       totalWithdrawal: {
         title: intl.formatMessage({ id: 'fundManagement.statistics.totalWithdrawal' }), // 累計出金
-        value: allTimeSummary.withdrawal.totalDisplay,
+        value: Number(allTimeSummary.withdrawal.totalDisplay),
         unit: 'USDC',
         change: allTimeSummary.withdrawal.changePercent,
         changeType: (allTimeSummary.withdrawal.changeDirection || 'unchanged') as 'up' | 'down' | 'unchanged'
@@ -130,11 +131,11 @@ export default function Statistics() {
 
   // 转换趋势图数据
   const trendData = useMemo(() => {
-    if (!apiData?.data?.timeSeries) {
+    if (!apiData?.timeSeries) {
       return { time: [], deposit: [], withdrawal: [] }
     }
 
-    const { timeSeries } = apiData.data
+    const { timeSeries } = apiData
     return {
       time: timeSeries.map((item) => item.time),
       deposit: timeSeries.map((item) => Number(item.depositAmount)),
@@ -144,8 +145,8 @@ export default function Statistics() {
 
   // 转换币种分布数据
   const coinDepositData = useMemo(() => {
-    if (!apiData?.data?.tokenBreakdown?.deposit) return []
-    return apiData.data.tokenBreakdown.deposit.map((item) => ({
+    if (!apiData?.tokenBreakdown?.deposit) return []
+    return apiData.tokenBreakdown.deposit.map((item) => ({
       name: extractTokenName(item.tokenId),
       icon: item.logoUrl,
       chainIcon: item.chainLogoUrl,
@@ -154,8 +155,8 @@ export default function Statistics() {
   }, [apiData])
 
   const coinWithdrawalData = useMemo(() => {
-    if (!apiData?.data?.tokenBreakdown?.withdrawal) return []
-    return apiData.data.tokenBreakdown.withdrawal.map((item) => ({
+    if (!apiData?.tokenBreakdown?.withdrawal) return []
+    return apiData.tokenBreakdown.withdrawal.map((item) => ({
       name: extractTokenName(item.tokenId),
       icon: item.logoUrl,
       chainIcon: item.chainLogoUrl,
@@ -165,16 +166,16 @@ export default function Statistics() {
 
   // 转换通道分布数据
   const channelDepositData = useMemo(() => {
-    if (!apiData?.data?.channelBreakdown?.deposit) return []
-    return apiData.data.channelBreakdown.deposit.map((item) => ({
+    if (!apiData?.channelBreakdown?.deposit) return []
+    return apiData.channelBreakdown.deposit.map((item) => ({
       name: CHANNEL_NAME_MAP[item.channel] || item.channel,
       value: Number(item.amountDisplay)
     }))
   }, [apiData])
 
   const channelWithdrawalData = useMemo(() => {
-    if (!apiData?.data?.channelBreakdown?.withdrawal) return []
-    return apiData.data.channelBreakdown.withdrawal.map((item) => ({
+    if (!apiData?.channelBreakdown?.withdrawal) return []
+    return apiData.channelBreakdown.withdrawal.map((item) => ({
       name: CHANNEL_NAME_MAP[item.channel] || item.channel,
       value: Number(item.amountDisplay)
     }))
@@ -212,7 +213,7 @@ export default function Statistics() {
         )}
 
         {/* 统计卡片 */}
-        <Spin spinning={loading}>
+        <Spin spinning={isLoading}>
           <StatisticCards data={statisticData} />
         </Spin>
 
@@ -229,8 +230,8 @@ export default function Statistics() {
             <QueryBtnGroup onSubmit={handleSubmit} onReset={handleReset} />
           </Form>
 
-          <Spin spinning={loading}>
-            {!loading && trendData.time.length === 0 ? (
+          <Spin spinning={isLoading}>
+            {!isLoading && trendData.time.length === 0 ? (
               <Alert message={intl.formatMessage({ id: 'fundManagement.statistics.noTrendData' })} type="info" showIcon /> // 暫無趨勢數據
             ) : (
               <TrendChart data={trendData} />
@@ -242,10 +243,9 @@ export default function Statistics() {
         <Row gutter={16} className="mt-4">
           <Col xs={24} lg={12}>
             <ProCard title={intl.formatMessage({ id: 'fundManagement.statistics.coinDistribution' })}>
-              {' '}
               {/* 出入金幣種 */}
-              <Spin spinning={loading}>
-                {!loading && coinDepositData.length === 0 && coinWithdrawalData.length === 0 ? (
+              <Spin spinning={isLoading}>
+                {!isLoading && coinDepositData.length === 0 && coinWithdrawalData.length === 0 ? (
                   <Alert message={intl.formatMessage({ id: 'fundManagement.statistics.noCoinData' })} type="info" showIcon /> // 暫無幣種分佈數據
                 ) : (
                   <CoinDistribution depositData={coinDepositData} withdrawalData={coinWithdrawalData} />
@@ -255,10 +255,9 @@ export default function Statistics() {
           </Col>
           <Col xs={24} lg={12}>
             <ProCard title={intl.formatMessage({ id: 'fundManagement.statistics.channelDistribution' })}>
-              {' '}
               {/* 通道 */}
-              <Spin spinning={loading}>
-                {!loading && channelDepositData.length === 0 && channelWithdrawalData.length === 0 ? (
+              <Spin spinning={isLoading}>
+                {!isLoading && channelDepositData.length === 0 && channelWithdrawalData.length === 0 ? (
                   <Alert message={intl.formatMessage({ id: 'fundManagement.statistics.noChannelData' })} type="info" showIcon /> // 暫無通道分佈數據
                 ) : (
                   <ChannelDistribution depositData={channelDepositData} withdrawalData={channelWithdrawalData} />

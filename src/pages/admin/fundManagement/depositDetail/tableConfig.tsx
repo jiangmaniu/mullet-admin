@@ -1,101 +1,42 @@
 import { ProColumns } from '@ant-design/pro-components'
 import { useIntl } from '@umijs/max'
-import { Tag, Tooltip } from 'antd'
+import { Button, Tag, Tooltip, Typography } from 'antd'
 import dayjs from 'dayjs'
 
-import { DepositDetailRecord } from '@/services/api/fundManagement'
+import { DepositDetailRecord, FilterOption, StatusOption } from '@/services/api/fundManagement'
+import { formatNum } from '@/utils'
 import { formatAddress, formatTxHash, renderFallback } from '@/utils/format'
 
-// 通道选项 - 专有名词保持英文
-export const CHANNEL_OPTIONS = [
-  { label: 'Privy', value: 'privy' },
-  { label: 'deBridge', value: 'debridge' },
-  { label: 'Jupiter', value: 'jupiter' },
-  { label: 'Lifi', value: 'lifi' },
-  { label: 'Rango', value: 'rango' },
-  { label: 'RocketX', value: 'rocketx' }
-]
-
-// 链网络选项 - 专有名词保持英文
-export const CHAIN_OPTIONS = [
-  { label: 'SOL', value: 'SOL' },
-  { label: 'ETH', value: 'ETH' },
-  { label: 'TRON', value: 'TRON' },
-  { label: 'BSC', value: 'BSC' },
-  { label: 'ARB', value: 'ARB' },
-  { label: 'BASE', value: 'BASE' }
-]
-
-// 状态枚举
-export enum DepositStatus {
-  PENDING = 'pending',
-  SUBMITTED = 'submitted',
-  PROCESSING = 'processing',
-  COMPLETED = 'completed',
-  FAILED = 'failed'
-}
-
-// 状态颜色映射
-const STATUS_COLOR_MAP: Record<DepositStatus, string> = {
-  [DepositStatus.PENDING]: 'default',
-  [DepositStatus.SUBMITTED]: 'processing',
-  [DepositStatus.PROCESSING]: 'processing',
-  [DepositStatus.COMPLETED]: 'success',
-  [DepositStatus.FAILED]: 'error'
+/**
+ * 根据 uiStatus 获取状态颜色
+ */
+const getStatusColor = (uiStatus: string): string => {
+  switch (uiStatus) {
+    case 'SUCCESS':
+      return 'success'
+    case 'FAIL':
+      return 'error'
+    case 'WAIT':
+      return 'warning'
+    case 'RECEIPT':
+      return 'processing'
+    default:
+      return 'default'
+  }
 }
 
 /**
  * 获取入金明细表格列配置
+ * @param options 动态筛选选项
  * @returns ProColumns 配置数组
  */
-export const getColumns = (): ProColumns<DepositDetailRecord>[] => {
+export const getColumns = (options: {
+  channels: FilterOption[]
+  chains: FilterOption[]
+  tokens: FilterOption[]
+  statuses: StatusOption[]
+}): ProColumns<DepositDetailRecord>[] => {
   const intl = useIntl()
-
-  // 状态选项
-  const STATUS_OPTIONS = [
-    {
-      label: intl.formatMessage({ id: 'fundManagement.depositDetail.statusPending' }), // 待處理
-      value: DepositStatus.PENDING
-    },
-    {
-      label: intl.formatMessage({ id: 'fundManagement.depositDetail.statusSubmitted' }), // 已提交
-      value: DepositStatus.SUBMITTED
-    },
-    {
-      label: intl.formatMessage({ id: 'fundManagement.depositDetail.statusProcessing' }), // 處理中
-      value: DepositStatus.PROCESSING
-    },
-    {
-      label: intl.formatMessage({ id: 'fundManagement.depositDetail.statusCompleted' }), // 已完成
-      value: DepositStatus.COMPLETED
-    },
-    {
-      label: intl.formatMessage({ id: 'fundManagement.depositDetail.statusFailed' }), // 失敗
-      value: DepositStatus.FAILED
-    }
-  ]
-
-  // 状态文本映射
-  const getStatusText = (status: DepositStatus): string => {
-    const statusMap: Record<DepositStatus, string> = {
-      [DepositStatus.PENDING]: intl.formatMessage({
-        id: 'fundManagement.depositDetail.statusPending' // 待處理
-      }),
-      [DepositStatus.SUBMITTED]: intl.formatMessage({
-        id: 'fundManagement.depositDetail.statusSubmitted' // 已提交
-      }),
-      [DepositStatus.PROCESSING]: intl.formatMessage({
-        id: 'fundManagement.depositDetail.statusProcessing' // 處理中
-      }),
-      [DepositStatus.COMPLETED]: intl.formatMessage({
-        id: 'fundManagement.depositDetail.statusCompleted' // 已完成
-      }),
-      [DepositStatus.FAILED]: intl.formatMessage({
-        id: 'fundManagement.depositDetail.statusFailed' // 失敗
-      })
-    }
-    return statusMap[status] || status
-  }
 
   return [
     {
@@ -136,7 +77,7 @@ export const getColumns = (): ProColumns<DepositDetailRecord>[] => {
       width: 120,
       valueType: 'select',
       fieldProps: {
-        options: CHANNEL_OPTIONS,
+        options: options.channels,
         placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.channelPlaceholder' }) // 請選擇通道
       }
     },
@@ -171,9 +112,9 @@ export const getColumns = (): ProColumns<DepositDetailRecord>[] => {
         })
       },
       render: (_, record) => (
-        <Tooltip title={record.fromAddress}>
-          <span>{formatAddress(record.fromAddress)}</span>
-        </Tooltip>
+        <Typography.Text copyable={{ text: record.fromAddress }} ellipsis={{ tooltip: record.fromAddress }} style={{ maxWidth: 150 }}>
+          {formatAddress(record.fromAddress)}
+        </Typography.Text>
       )
     },
     {
@@ -182,7 +123,7 @@ export const getColumns = (): ProColumns<DepositDetailRecord>[] => {
       width: 120,
       valueType: 'select',
       fieldProps: {
-        options: CHAIN_OPTIONS,
+        options: options.chains,
         placeholder: intl.formatMessage({
           id: 'fundManagement.depositDetail.fromChainPlaceholder' // 請選擇鏈網絡
         })
@@ -192,9 +133,11 @@ export const getColumns = (): ProColumns<DepositDetailRecord>[] => {
       title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromToken' }), // 發起幣種
       dataIndex: 'fromToken',
       width: 120,
+      valueType: 'select',
       fieldProps: {
+        options: options.tokens,
         placeholder: intl.formatMessage({
-          id: 'fundManagement.depositDetail.fromTokenPlaceholder' // 請輸入幣種
+          id: 'fundManagement.depositDetail.fromTokenPlaceholder' // 請選擇幣種
         })
       }
     },
@@ -204,7 +147,7 @@ export const getColumns = (): ProColumns<DepositDetailRecord>[] => {
       width: 150,
       hideInSearch: true,
       render: (_, record) => {
-        return renderFallback(record.fromAmount)
+        return formatNum(record.fromAmount, { precision: 2 })
       }
     },
     {
@@ -216,9 +159,9 @@ export const getColumns = (): ProColumns<DepositDetailRecord>[] => {
         placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.txHashPlaceholder' }) // 請輸入txHash
       },
       render: (_, record) => (
-        <Tooltip title={record.txHash}>
-          <span>{formatTxHash(record.txHash)}</span>
-        </Tooltip>
+        <Typography.Text copyable={{ text: record.txHash }} ellipsis={{ tooltip: record.txHash }} style={{ maxWidth: 150 }}>
+          {formatTxHash(record.txHash)}
+        </Typography.Text>
       )
     },
     {
@@ -227,12 +170,13 @@ export const getColumns = (): ProColumns<DepositDetailRecord>[] => {
       width: 120,
       valueType: 'select',
       fieldProps: {
-        options: STATUS_OPTIONS,
+        options: options.statuses,
         placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.statusPlaceholder' }) // 請選擇狀態
       },
       render: (_, record) => {
-        const statusText = getStatusText(record.status as DepositStatus)
-        const statusColor = STATUS_COLOR_MAP[record.status as DepositStatus] || 'default'
+        const statusOption = options.statuses.find((s) => s.value === record.status)
+        const statusText = statusOption?.label || record.status
+        const statusColor = statusOption ? getStatusColor(statusOption.uiStatus) : 'default'
         return <Tag color={statusColor}>{renderFallback(statusText)}</Tag>
       }
     },
@@ -252,10 +196,32 @@ export const getColumns = (): ProColumns<DepositDetailRecord>[] => {
     {
       title: intl.formatMessage({ id: 'fundManagement.depositDetail.createdAt' }), // 創建時間
       dataIndex: 'createdAt',
-      width: 180,
+      width: 200,
       hideInSearch: true,
-      render: (_, record) => dayjs(record.createdAt).format('YYYY-MM-DD HH:mm:ss')
+      render: (_, record) => (
+        <span style={{ whiteSpace: 'nowrap' }}>
+          {dayjs(record.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+        </span>
+      )
+    },
+    {
+      title: '操作',
+      dataIndex: 'action',
+      width: 100,
+      fixed: 'right',
+      hideInSearch: true,
+      render: (_, record) => (
+        <Button
+          type="link"
+          size="small"
+          onClick={() => {
+            console.log('查看详情:', record)
+            // TODO: 实现查看详情逻辑
+          }}
+        >
+          查看
+        </Button>
+      )
     }
   ]
 }
-

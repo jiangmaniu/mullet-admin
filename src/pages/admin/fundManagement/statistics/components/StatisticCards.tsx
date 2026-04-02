@@ -25,7 +25,7 @@ interface StatisticCardsProps {
 const StatisticCard = ({ cardData }: { cardData: StatisticCardData }) => {
   const intl = useIntl()
   const isUp = cardData.changeType === 'up'
-  const hasChange = cardData.change !== null && cardData.changeType !== 'unchanged'
+  const isDown = cardData.changeType === 'down'
 
   return (
     <div className="statistic-card-wrapper">
@@ -35,16 +35,12 @@ const StatisticCard = ({ cardData }: { cardData: StatisticCardData }) => {
         </div>
         <div className="card-value">{formatNum(cardData.value, { precision: 2, unit: cardData.unit })}</div>
         <div className="card-change">
-          <span className="change-label">{intl.formatMessage({ id: 'fundManagement.statistics.comparedToPreviousPeriod' })}</span>{' '}
+          <span className="change-label">{intl.formatMessage({ id: 'fundManagement.statistics.comparedToPreviousPeriod' })}</span>
           {/* 較上一個週期 */}
-          {hasChange ? (
-            <span className={classNames('change-badge', isUp ? 'change-up' : 'change-down')}>
-              <div className={classNames('change-arrow', isUp ? 'arrow-up' : 'arrow-down')} />
-              <span>{formatNum(cardData.change, { precision: 2, unit: '%' })}</span>
-            </span>
-          ) : (
-            <span className="change-badge change-unchanged">--</span>
-          )}
+          <span className={classNames('change-badge', isUp ? 'change-up' : isDown ? 'change-down' : 'change-none')}>
+            <div className={classNames('change-arrow', isUp ? 'arrow-up' : isDown ? 'arrow-down' : 'arrow-none')} />
+            <span>{formatNum(cardData.change, { precision: 2, unit: '%' })}</span>
+          </span>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 export default {
   depositDetail: {
     // Table column titles
-    orderNo: 'Order ID',
+    orderNo: 'Deposit Order ID',
     channelOrderId: 'Channel Order ID',
     channel: 'Payment Channel',
     userId: 'User ID',
@@ -10,9 +10,12 @@ export default {
     fromChain: 'From Chain',
     fromToken: 'From Token',
     fromAmount: 'From Amount',
-    txHash: 'txHash',
+    txHash: 'Transaction Hash',
     status: 'Order Status',
     createdAt: 'Created At',
+
+    // Buttons
+    supplementOrder: 'Supplement Order',
 
     // Placeholder text
     orderNoPlaceholder: 'Enter Order ID',
@@ -22,16 +25,15 @@ export default {
     tradeAccountIdPlaceholder: 'Enter Account ID',
     fromAddressPlaceholder: 'Enter From Address',
     fromChainPlaceholder: 'Select Chain',
-    fromTokenPlaceholder: 'Enter Token',
-    txHashPlaceholder: 'Enter txHash',
+    fromTokenPlaceholder: 'Select Token',
+    txHashPlaceholder: 'Enter Transaction Hash',
     statusPlaceholder: 'Select Status',
 
     // Status text
-    statusPending: 'Pending',
-    statusSubmitted: 'Submitted',
-    statusProcessing: 'Processing',
     statusCompleted: 'Completed',
-    statusFailed: 'Failed'
+    statusConfirming: 'Transaction Exception',
+    statusFailed: 'Failed',
+    statusPending: 'Pending'
   },
   statistics: {
     // Statistic card titles

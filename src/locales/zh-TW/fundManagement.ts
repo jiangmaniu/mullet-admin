@@ -1,7 +1,7 @@
 export default {
   depositDetail: {
     // 表格列标题
-    orderNo: '訂單ID',
+    orderNo: '入金訂單ID',
     channelOrderId: '通道訂單ID',
     channel: '支付通道',
     userId: '用戶ID',
@@ -10,9 +10,12 @@ export default {
     fromChain: '發起網絡',
     fromToken: '發起幣種',
     fromAmount: '發起數額',
-    txHash: 'txHash',
+    txHash: '交易哈希',
     status: '訂單狀態',
     createdAt: '創建時間',
+
+    // 按钮
+    supplementOrder: '補單',
 
     // 占位符文本
     orderNoPlaceholder: '請輸入訂單ID',
@@ -22,16 +25,15 @@ export default {
     tradeAccountIdPlaceholder: '請輸入賬戶ID',
     fromAddressPlaceholder: '請輸入發起地址',
     fromChainPlaceholder: '請選擇鏈網絡',
-    fromTokenPlaceholder: '請輸入幣種',
-    txHashPlaceholder: '請輸入txHash',
+    fromTokenPlaceholder: '請選擇幣種',
+    txHashPlaceholder: '請輸入交易哈希',
     statusPlaceholder: '請選擇狀態',
 
     // 状态文本
-    statusPending: '待處理',
-    statusSubmitted: '已提交',
-    statusProcessing: '處理中',
-    statusCompleted: '已完成',
-    statusFailed: '失敗'
+    statusCompleted: '完成',
+    statusConfirming: '交易異常',
+    statusFailed: '失敗',
+    statusPending: '待處理'
   },
   statistics: {
     // 统计卡片标题
