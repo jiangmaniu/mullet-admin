@@ -144,8 +144,8 @@ export type IOpt = {
 export const formatNum = (value: any, opts?: IOpt) => {
   const { isTruncateDecimal = true, placeholder = '‑‑' } = opts || {}
   const unit = opts?.unit ? ' ' + opts?.unit : ''
-  // 不是一个数字
-  if (isNaN(value) || !Number(value)) {
+  // 不是一个数字或者值为 null/undefined
+  if (value === null || value === undefined || isNaN(value)) {
     return (opts?.noDataFormat || placeholder) + unit
   }
   const val = value || '0.00'

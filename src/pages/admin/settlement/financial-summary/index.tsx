@@ -43,38 +43,16 @@ function FinancialSummary() {
       <Card className="mb-4">
         <Row gutter={16}>
           <Col span={6}>
-            <Statistic
-              title="累计充值"
-              value={summary.totalDeposits}
-              precision={2}
-              valueStyle={{ color: '#3f8600' }}
-              suffix="USDT"
-            />
+            <Statistic title="累计充值" value={summary.totalDeposits} precision={2} valueStyle={{ color: '#3f8600' }} suffix="USDT" />
           </Col>
           <Col span={6}>
-            <Statistic
-              title="累计提现"
-              value={summary.totalWithdrawals}
-              precision={2}
-              valueStyle={{ color: '#cf1322' }}
-              suffix="USDT"
-            />
+            <Statistic title="累计提现" value={summary.totalWithdrawals} precision={2} valueStyle={{ color: '#cf1322' }} suffix="USDT" />
           </Col>
           <Col span={6}>
-            <Statistic
-              title="当前余额"
-              value={summary.totalBalance}
-              precision={2}
-              valueStyle={{ color: '#1890ff' }}
-              suffix="USDT"
-            />
+            <Statistic title="当前余额" value={summary.totalBalance} precision={2} valueStyle={{ color: '#1890ff' }} suffix="USDT" />
           </Col>
           <Col span={6}>
-            <Statistic
-              title="待对账批次"
-              value={summary.pendingSettlements}
-              valueStyle={{ color: '#faad14' }}
-            />
+            <Statistic title="待对账批次" value={summary.pendingSettlements} valueStyle={{ color: '#faad14' }} />
           </Col>
         </Row>
       </Card>

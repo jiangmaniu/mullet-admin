@@ -201,7 +201,7 @@ export default [
         name: 'history-kline',
         access: 'canAdmin', // 权限配置
         code: 'datasources:history-kline' // 需要与后台配置的菜单编号code一致
-      },
+      }
     ]
   },
   {
@@ -392,19 +392,19 @@ export default [
     icon: 'icon-kehuzu1',
     access: 'canAdmin', // 权限配置
     component: './admin/customerGroup',
-    code: 'customer-group', // 需要与后台配置的菜单编号code一致
+    code: 'customer-group' // 需要与后台配置的菜单编号code一致
   },
   {
     path: '/:lng/customer-group/add',
     access: 'canAdmin', // 权限配置
     component: './admin/customerGroup/submitForm',
-    code: 'customer-group:add', // 需要与后台配置的菜单编号code一致
+    code: 'customer-group:add' // 需要与后台配置的菜单编号code一致
   },
   {
     path: '/:lng/customer-group/edit/:id',
     access: 'canAdmin', // 权限配置
     component: './admin/customerGroup/submitForm',
-    code: 'customer-group:edit', // 需要与后台配置的菜单编号code一致
+    code: 'customer-group:edit' // 需要与后台配置的菜单编号code一致
   },
   {
     path: '/:lng/msg',
@@ -474,7 +474,7 @@ export default [
         name: 'station-msg',
         access: 'canAdmin', // 权限配置
         code: 'msg:station-msg:edit-template' // 需要与后台配置的菜单编号code一致
-      },
+      }
     ]
   },
   // 暂时隐藏不做
@@ -921,7 +921,7 @@ export default [
         name: 'personal',
         access: 'canAdmin', // 权限配置
         code: 'logs:personal' // 需要与后台配置的菜单编号code一致
-      },
+      }
     ]
   },
   // ================= 代理系统菜单 start =================
@@ -966,7 +966,7 @@ export default [
         access: 'canAdmin', // 权限配置
         component: './admin/agent/systemSetting',
         code: 'agent:agent-system-setting' // 需要与后台配置的菜单编号code一致
-      },
+      }
     ]
   },
   // ================= 代理系统菜单 end =================
@@ -989,6 +989,119 @@ export default [
         component: './admin/settlement/audit-logs',
         name: 'audit-logs',
         code: 'settlement:audit-logs' // 需要与后台配置的菜单编号code一致
+      }
+    ]
+  },
+
+  // 出入金管理
+  {
+    path: '/:lng/fund-management',
+    name: 'fund-management',
+    icon: 'icon-caidan-jiaoyipinzhong',
+    code: 'fund-management',
+    routes: [
+      {
+        path: '/:lng/fund-management/statistics',
+        component: './admin/fundManagement/statistics',
+        name: 'statistics',
+        access: 'canAdmin',
+        code: 'fund-management:statistics'
+      },
+      {
+        path: '/:lng/fund-management/deposit-detail',
+        component: './admin/fundManagement/depositDetail',
+        name: 'deposit-detail',
+        access: 'canAdmin',
+        code: 'fund-management:deposit-detail'
+      },
+      {
+        path: '/:lng/fund-management/withdrawal-approve',
+        component: './admin/fundManagement/withdrawalApprove',
+        name: 'withdrawal-approve',
+        access: 'canAdmin',
+        code: 'fund-management:withdrawal-approve'
+      },
+      {
+        path: '/:lng/fund-management/withdrawal-detail',
+        component: './admin/fundManagement/withdrawalDetail',
+        name: 'withdrawal-detail',
+        access: 'canAdmin',
+        code: 'fund-management:withdrawal-detail'
+      },
+      {
+        path: '/:lng/fund-management/deposit-supplement-detail',
+        component: './admin/fundManagement/depositSupplementDetail',
+        name: 'deposit-supplement-detail',
+        access: 'canAdmin',
+        code: 'fund-management:deposit-supplement-detail'
+      },
+      // 跨链交易管理（二级菜单）
+      {
+        path: '/:lng/fund-management/cross-chain',
+        name: 'cross-chain',
+        code: 'fund-management:cross-chain',
+        routes: [
+          {
+            path: '/:lng/fund-management/cross-chain/transaction-detail',
+            component: './admin/crossChain/transactionDetail',
+            name: 'transaction-detail',
+            access: 'canAdmin',
+            code: 'fund-management:cross-chain:transaction-detail'
+          },
+          {
+            path: '/:lng/fund-management/cross-chain/pending-transaction',
+            component: './admin/crossChain/pendingTransaction',
+            name: 'pending-transaction',
+            access: 'canAdmin',
+            code: 'fund-management:cross-chain:pending-transaction'
+          }
+        ]
+      },
+      // Swap交易管理（二级菜单）
+      {
+        path: '/:lng/fund-management/swap-trading',
+        name: 'swap-trading',
+        code: 'fund-management:swap-trading',
+        routes: [
+          {
+            path: '/:lng/fund-management/swap-trading/transaction-detail',
+            component: './admin/swapTrading/transactionDetail',
+            name: 'transaction-detail',
+            access: 'canAdmin',
+            code: 'fund-management:swap-trading:transaction-detail'
+          },
+          {
+            path: '/:lng/fund-management/swap-trading/pending-transaction',
+            component: './admin/swapTrading/pendingTransaction',
+            name: 'pending-transaction',
+            access: 'canAdmin',
+            code: 'fund-management:swap-trading:pending-transaction'
+          }
+        ]
+      },
+      // 出入金异常记录
+      {
+        path: '/:lng/fund-management/fund-exception',
+        name: 'fund-exception',
+        access: 'canAdmin',
+        component: './admin/fundManagement/exceptionRecord',
+        code: 'fund-management:fund-exception'
+      },
+      // 出入金配置
+      {
+        path: '/:lng/fund-management/fund-config',
+        name: 'fund-config',
+        access: 'canAdmin',
+        component: './admin/fundManagement/config',
+        code: 'fund-management:fund-config'
+      },
+      // 通道管理
+      {
+        path: '/:lng/fund-management/channel-management',
+        name: 'channel-management',
+        access: 'canAdmin',
+        component: './admin/fundManagement/channelManagement',
+        code: 'fund-management:channel-management'
       }
     ]
   },
@@ -1030,7 +1143,7 @@ export default [
         access: 'canAdmin', // 权限配置
         component: './admin/activity/firstChargeActivity',
         code: 'activity:first-charge-activity' // 需要与后台配置的菜单编号code一致
-      },
+      }
     ]
   },
   {

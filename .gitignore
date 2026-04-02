@@ -55,3 +55,4 @@ build
 *.tgz
 
 .agent
+.ace-tool/

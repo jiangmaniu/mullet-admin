@@ -1,0 +1,56 @@
+.coin-distribution-container {
+  position: relative;
+}
+
+.custom-yaxis-labels {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.coin-label {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  transform: translateY(-50%);
+  max-width: 75px; // 限制最大宽度，避免与图表重叠
+}
+
+.icon-container {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  margin-right: 5px;
+  flex-shrink: 0;
+}
+
+.token-icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.chain-icon {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid white;
+  display: block;
+}
+
+.coin-name {
+  color: #6a7073;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; // 长文本显示省略号
+  flex: 1;
+  min-width: 0; // 允许 flex 子元素缩小
+}

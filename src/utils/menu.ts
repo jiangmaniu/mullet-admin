@@ -51,13 +51,13 @@ export const getMenuData = (menuData: User.MenuItem[], defaultMenuData: MenuData
           // 使用菜单别名替换菜单的name，重新做国际化翻译
           // 这里的别名alias需要在服务端配置动态菜单加上，必须和/config/routes.ts 定义的静态菜单的name一致，否则无法自动调用在locale/menu定义的翻译 menu.xx来翻译
           item.name = item.alias
-          
+
           // 获取本地config/routes.ts的icon
           const localIcon = codeMapIcon.get(item.code)
-          
+
           // 特殊处理：结算菜单使用有效的图标
           if (item.code === 'settlement') {
-            item.icon = 'icon-peizhi'  // 强制使用有效的图标
+            item.icon = 'icon-peizhi' // 强制使用有效的图标
           } else {
             item.icon = localIcon || item.icon
           }

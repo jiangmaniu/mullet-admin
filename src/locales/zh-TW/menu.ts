@@ -92,5 +92,26 @@ export default {
   'menu.agent.agent-withdrawal-record': '代理提現記錄',
   'menu.version': '版本管理',
   'menu.activity': '活動管理',
-  'menu.activity.first-charge-activity': '首充活動'
+  'menu.activity.first-charge-activity': '首充活動',
+  // 出入金管理
+  'menu.fund-management': '出入金管理',
+  'menu.fund-management.statistics': '出入金統計',
+  'menu.fund-management.deposit-detail': '入金明細',
+  'menu.fund-management.withdrawal-approve': '出金審批',
+  'menu.fund-management.withdrawal-detail': '出金明細',
+  'menu.fund-management.deposit-supplement-detail': '入金補單明細',
+  // 跨链交易管理
+  'menu.fund-management.cross-chain': '跨鏈交易管理',
+  'menu.fund-management.cross-chain.transaction-detail': '跨鏈交易明細',
+  'menu.fund-management.cross-chain.pending-transaction': '待跨鏈交易',
+  // Swap交易管理
+  'menu.fund-management.swap-trading': 'Swap交易管理',
+  'menu.fund-management.swap-trading.transaction-detail': 'Swap交易明細',
+  'menu.fund-management.swap-trading.pending-transaction': '待Swap交易',
+  // 出入金异常记录
+  'menu.fund-management.fund-exception': '出入金異常記錄',
+  // 出入金配置
+  'menu.fund-management.fund-config': '出入金配置',
+  // 通道管理
+  'menu.fund-management.channel-management': '通道管理'
 }
