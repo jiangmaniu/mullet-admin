@@ -5,10 +5,22 @@ import dayjs from 'dayjs'
 
 import { DepositDetailRecord, FilterOption, StatusOption } from '@/services/api/fundManagement'
 import { formatNum } from '@/utils'
-import { formatAddress, formatTxHash, renderFallback } from '@/utils/format'
+import { formatAddress, renderFallback } from '@/utils/format'
 
 import DetailDrawer from './components/DetailDrawer'
 import { getStatusColor, getStatusLabel } from './utils'
+
+/**
+ * 通道名称映射
+ */
+const CHANNEL_NAME_MAP: Record<string, string> = {
+  privy: 'channelPrivy',
+  debridge: 'channelDebridge',
+  jupiter: 'channelJupiter',
+  rango: 'channelRango',
+  lifi: 'channelLifi',
+  rocketx: 'channelRocketx'
+}
 
 /**
  * 获取入金明细表格列配置
@@ -25,23 +37,23 @@ export const getColumns = (options: {
 
   return [
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.orderNo' }), // 訂單ID
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.orderNo' }),
       dataIndex: 'orderNo',
-      width: 180,
+      width: 220,
       fixed: 'left',
       ellipsis: true,
       fieldProps: {
-        placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.orderNoPlaceholder' }) // 請輸入訂單ID
+        placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.orderNoPlaceholder' })
       }
     },
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.channelOrderId' }), // 通道訂單ID
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.channelOrderId' }),
       dataIndex: 'channelOrderId',
       width: 180,
       ellipsis: true,
       fieldProps: {
         placeholder: intl.formatMessage({
-          id: 'fundManagement.depositDetail.channelOrderIdPlaceholder' // 請輸入通道訂單ID
+          id: 'fundManagement.depositDetail.channelOrderIdPlaceholder'
         })
       },
       render: (_, record) => {
@@ -57,43 +69,50 @@ export const getColumns = (options: {
       }
     },
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.channel' }), // 支付通道
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.channel' }),
       dataIndex: 'channel',
       width: 120,
       valueType: 'select',
       fieldProps: {
         options: options.channels,
-        placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.channelPlaceholder' }) // 請選擇通道
+        placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.channelPlaceholder' })
+      },
+      render: (_, record) => {
+        const channelKey = CHANNEL_NAME_MAP[record.channel.toLowerCase()]
+        if (channelKey) {
+          return intl.formatMessage({ id: `fundManagement.depositDetail.${channelKey}` })
+        }
+        return record.channel
       }
     },
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.userId' }), // 用戶ID
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.userId' }),
       dataIndex: 'userId',
       width: 150,
       ellipsis: true,
       fieldProps: {
-        placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.userIdPlaceholder' }) // 請輸入用戶ID
+        placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.userIdPlaceholder' })
       }
     },
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.tradeAccountId' }), // 賬戶ID
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.tradeAccountId' }),
       dataIndex: 'tradeAccountId',
       width: 150,
       ellipsis: true,
       fieldProps: {
         placeholder: intl.formatMessage({
-          id: 'fundManagement.depositDetail.tradeAccountIdPlaceholder' // 請輸入賬戶ID
+          id: 'fundManagement.depositDetail.tradeAccountIdPlaceholder'
         })
       }
     },
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromAddress' }), // 發起地址
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromAddress' }),
       dataIndex: 'fromAddress',
       width: 180,
       ellipsis: true,
       fieldProps: {
         placeholder: intl.formatMessage({
-          id: 'fundManagement.depositDetail.fromAddressPlaceholder' // 請輸入發起地址
+          id: 'fundManagement.depositDetail.fromAddressPlaceholder'
         })
       },
       render: (_, record) => (
@@ -103,31 +122,31 @@ export const getColumns = (options: {
       )
     },
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromChain' }), // 發起網絡
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromChain' }),
       dataIndex: 'fromChain',
       width: 120,
       valueType: 'select',
       fieldProps: {
         options: options.chains,
         placeholder: intl.formatMessage({
-          id: 'fundManagement.depositDetail.fromChainPlaceholder' // 請選擇鏈網絡
+          id: 'fundManagement.depositDetail.fromChainPlaceholder'
         })
       }
     },
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromToken' }), // 發起幣種
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromToken' }),
       dataIndex: 'fromToken',
       width: 120,
       valueType: 'select',
       fieldProps: {
         options: options.tokens,
         placeholder: intl.formatMessage({
-          id: 'fundManagement.depositDetail.fromTokenPlaceholder' // 請選擇幣種
+          id: 'fundManagement.depositDetail.fromTokenPlaceholder'
         })
       }
     },
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromAmount' }), // 發起數額
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromAmount' }),
       dataIndex: 'fromAmount',
       width: 150,
       hideInSearch: true,
@@ -136,56 +155,18 @@ export const getColumns = (options: {
       }
     },
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.txHash' }), // txHash
-      dataIndex: 'txHash',
-      width: 180,
-      ellipsis: true,
-      fieldProps: {
-        placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.txHashPlaceholder' }) // 請輸入txHash
-      },
-      render: (_, record) => (
-        <Typography.Text copyable={{ text: record.txHash }} ellipsis={{ tooltip: record.txHash }} style={{ maxWidth: 150 }}>
-          {formatTxHash(record.txHash)}
-        </Typography.Text>
-      )
-    },
-    {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.status' }), // 訂單狀態
+      title: intl.formatMessage({ id: 'fundManagement.depositDetail.status' }),
       dataIndex: 'status',
       width: 120,
       valueType: 'select',
       fieldProps: {
         options: options.statuses,
-        placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.statusPlaceholder' }) // 請選擇狀態
+        placeholder: intl.formatMessage({ id: 'fundManagement.depositDetail.statusPlaceholder' })
       },
       render: (_, record) => {
         const statusText = getStatusLabel(record.status, intl) || record.status
-        return <Tag color={getStatusColor(record.status)}>{renderFallback(statusText)}</Tag>
+        return <Tag color={getStatusColor(record.uiStatus)}>{renderFallback(statusText)}</Tag>
       }
-    },
-    {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.createdAt' }), // 創建時間
-      dataIndex: 'createdAt',
-      width: 180,
-      valueType: 'dateTimeRange',
-      hideInTable: true,
-      search: {
-        transform: (value) => ({
-          startTime: value[0] ? dayjs(value[0]).valueOf() : undefined,
-          endTime: value[1] ? dayjs(value[1]).valueOf() : undefined
-        })
-      }
-    },
-    {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.createdAt' }), // 創建時間
-      dataIndex: 'createdAt',
-      width: 200,
-      hideInSearch: true,
-      render: (_, record) => (
-        <span style={{ whiteSpace: 'nowrap' }}>
-          {dayjs(record.createdAt).format('YYYY-MM-DD HH:mm:ss')}
-        </span>
-      )
     },
     {
       title: intl.formatMessage({ id: 'common.op' }),
@@ -194,12 +175,7 @@ export const getColumns = (options: {
       fixed: 'right',
       hideInSearch: true,
       render: (_, record) => (
-        <DetailDrawer
-          trigger={
-            <a style={{ fontSize: 12 }}>{intl.formatMessage({ id: 'common.chakan' })}</a>
-          }
-          record={record}
-        />
+        <DetailDrawer trigger={<a style={{ fontSize: 12 }}>{intl.formatMessage({ id: 'common.chakan' })}</a>} record={record} />
       )
     }
   ]

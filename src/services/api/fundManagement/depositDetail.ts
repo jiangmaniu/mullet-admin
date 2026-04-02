@@ -35,49 +35,61 @@ export interface DepositDetailParams {
 }
 
 /**
+ * 链上交易信息
+ */
+export interface TxInfo {
+  /** 交易哈希 */
+  txHash: string
+  /** 发起地址（Bridge 目标链 tx 为 null） */
+  fromAddress: string | null
+  /** 接收地址（Bridge 源链 tx 为 null） */
+  toAddress: string | null
+  /** 链网络：Solana / Ethereum / Tron / BSC / Arbitrum / Base */
+  network: string
+}
+
+/**
  * 入金明细记录
  */
 export interface DepositDetailRecord {
   /** 入金订单 ID */
   orderNo: string
-  /** 通道订单 ID */
-  channelOrderId: string
-  /** 通道名 */
+  /** 通道订单 ID（Privy 直充为 null） */
+  channelOrderId: string | null
+  /** 通道名：privy / debridge / jupiter / rango / lifi / rocketx */
   channel: string
   /** 路由：Wallet（直充）/ Bridge（跨链）/ Swap */
   route: string
   /** 用户 ID */
   userId: string
   /** 交易账户 ID */
-  tradeAccountId: string
+  tradeAccountId: string | null
   /** 发起地址 */
   fromAddress: string
-  /** 接收地址 */
-  toAddress?: string
-  /** 发起链 */
+  /** 发起链：SOL / ETH / TRON / BSC / ARB / BASE */
   fromChain: string
-  /** 发起币种 */
+  /** 发起币种：USDC / USDT / SOL / ETH */
   fromToken: string
-  /** 发起金额 */
+  /** 发起金额（USDC 小数，6位精度） */
   fromAmount: string
-  /** 链上 txHash */
-  txHash: string
-  /** 到账 USDC 金额 */
-  arrivedAmountUsdc: string
-  /** Gas 费 */
-  gasFee: string
-  /** Gas 费币种 */
-  gasFeeToken: string
-  /** 状态 */
+  /** 链上交易列表（Wallet/Swap 通常1条；Bridge 跨链有2条） */
+  txList: TxInfo[]
+  /** 实际到账 USDC（经滑点后的金额，6位精度） */
+  arrivedAmountUsdc: string | null
+  /** Gas 费（仅 Swap 路由有值） */
+  gasFee: string | null
+  /** Gas 费币种（SOL / ETH 等） */
+  gasFeeToken: string | null
+  /** 状态：completed / confirmed / failed / pending / confirming */
   status: string
-  /** UI 状态 */
+  /** UI 状态：SUCCESS / FAIL / WAIT */
   uiStatus: string
   /** 创建时间（ms） */
-  createdAt: number
+  createdAt: number | null
   /** 更新时间（ms） */
-  updatedAt: number
+  updatedAt: number | null
   /** 完成时间（ms） */
-  completedAt: number
+  completedAt: number | null
 }
 
 /**

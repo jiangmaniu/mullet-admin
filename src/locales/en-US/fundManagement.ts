@@ -4,6 +4,7 @@ export default {
     orderNo: 'Deposit Order ID',
     channelOrderId: 'Channel Order ID',
     channel: 'Payment Channel',
+    route: 'Route',
     userId: 'User ID',
     tradeAccountId: 'Account ID',
     fromAddress: 'From Address',
@@ -12,13 +13,32 @@ export default {
     fromChainLabel: 'Chain',
     fromToken: 'From Token',
     fromAmount: 'From Amount',
+    arrivedAmountUsdc: 'Arrived Amount (USDC)',
+    gasFee: 'Gas Fee',
     txHash: 'Transaction Hash',
+    txList: 'Transaction List',
     status: 'Order Status',
     createdAt: 'Created At',
+    completedAt: 'Completed At',
+
+    // Route types
+    routeWallet: 'Wallet',
+    routeBridge: 'Bridge',
+    routeSwap: 'Swap',
+
+    // Channel names
+    channelPrivy: 'Privy',
+    channelDebridge: 'deBridge',
+    channelJupiter: 'Jup',
+    channelRango: 'Rango',
+    channelLifi: 'LiFi',
+    channelRocketx: 'RocketX',
 
     // Drawer
     drawerTitle: 'Deposit Order Detail',
     onChainInfo: 'On-chain Info',
+    transactionInfo: 'Transaction Info',
+    feeInfo: 'Fee Info',
 
     // Buttons
     supplementOrder: 'Supplement Order',
@@ -37,9 +57,29 @@ export default {
 
     // Status text
     statusCompleted: 'Completed',
-    statusConfirming: 'Transaction Exception',
+    statusConfirmed: 'Confirmed',
+    statusConfirming: 'Confirming',
     statusFailed: 'Failed',
     statusPending: 'Pending'
+  },
+  depositSupplement: {
+    pageTitle: 'Deposit Supplement',
+    userId: 'User Account ID',
+    userIdPlaceholder: 'Enter User Account ID',
+    userIdRequired: 'Please enter User Account ID',
+    tradeAccountAddress: 'Trade Account Address',
+    tradeAccountAddressPlaceholder: 'Enter Trade Account Address',
+    tradeAccountAddressRequired: 'Please enter Trade Account Address',
+    amount: 'Deposit Amount (USDC)',
+    amountPlaceholder: 'Enter Deposit Amount',
+    amountRequired: 'Please enter Deposit Amount',
+    txHash: 'TxHash',
+    txHashPlaceholder: 'Enter Transaction Hash',
+    txHashRequired: 'Please enter Transaction Hash',
+    isCollected: 'Is Collected',
+    isCollectedRequired: 'Please select if collected',
+    submitSuccess: 'Supplement submitted successfully',
+    submitFailed: 'Supplement submission failed'
   },
   statistics: {
     // Statistic card titles

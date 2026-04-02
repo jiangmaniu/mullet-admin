@@ -1,17 +1,15 @@
 const UI_STATUS_I18N_KEY: Record<string, string> = {
   completed: 'fundManagement.depositDetail.statusCompleted',
+  confirmed: 'fundManagement.depositDetail.statusConfirmed',
   failed: 'fundManagement.depositDetail.statusFailed',
   pending: 'fundManagement.depositDetail.statusPending',
-  submitted: 'fundManagement.depositDetail.statusConfirming',
-  processing: 'fundManagement.depositDetail.statusConfirming'
+  confirming: 'fundManagement.depositDetail.statusConfirming',
 }
 
 const STATUS_COLOR: Record<string, string> = {
-  completed: 'success',
-  failed: 'error',
-  pending: 'warning',
-  submitted: 'processing',
-  processing: 'processing'
+  SUCCESS: 'success',
+  FAIL: 'error',
+  WAIT: 'warning'
 }
 
 export const getStatusLabel = (status: string, intl: { formatMessage: (d: { id: string }) => string }): string => {

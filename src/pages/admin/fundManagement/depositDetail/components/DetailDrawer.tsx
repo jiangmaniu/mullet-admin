@@ -19,7 +19,7 @@ export default function DetailDrawer({ trigger, record }: DetailDrawerProps) {
 
   const chainColumns = [
     {
-      title: intl.formatMessage({ id: 'fundManagement.depositDetail.txHash' }),
+      title: 'TxHash',
       dataIndex: 'txHash',
       key: 'txHash',
       render: (value: string) => (
@@ -32,39 +32,41 @@ export default function DetailDrawer({ trigger, record }: DetailDrawerProps) {
       title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromAddress' }),
       dataIndex: 'fromAddress',
       key: 'fromAddress',
-      render: (value: string) => (
-        <Typography.Text copyable={value ? { text: value } : false} ellipsis={value ? { tooltip: value } : false} style={{ maxWidth: 160 }}>
-          {formatAddress(value)}
-        </Typography.Text>
-      )
+      render: (value: string | null) => {
+        if (!value) return renderFallback(null)
+        return (
+          <Typography.Text copyable={{ text: value }} ellipsis={{ tooltip: value }} style={{ maxWidth: 160 }}>
+            {formatAddress(value)}
+          </Typography.Text>
+        )
+      }
     },
     {
       title: intl.formatMessage({ id: 'fundManagement.depositDetail.toAddress' }),
       dataIndex: 'toAddress',
       key: 'toAddress',
-      render: (value: string) => (
-        <Typography.Text copyable={value ? { text: value } : false} ellipsis={value ? { tooltip: value } : false} style={{ maxWidth: 160 }}>
-          {formatAddress(value)}
-        </Typography.Text>
-      )
+      render: (value: string | null) => {
+        if (!value) return renderFallback(null)
+        return (
+          <Typography.Text copyable={{ text: value }} ellipsis={{ tooltip: value }} style={{ maxWidth: 160 }}>
+            {formatAddress(value)}
+          </Typography.Text>
+        )
+      }
     },
     {
       title: intl.formatMessage({ id: 'fundManagement.depositDetail.fromChainLabel' }),
-      dataIndex: 'fromChain',
-      key: 'fromChain',
+      dataIndex: 'network',
+      key: 'network',
       render: (value: string) => renderFallback(value)
     }
   ]
 
-  const chainData = [
-    {
-      key: '1',
-      txHash: record.txHash,
-      fromAddress: record.fromAddress,
-      toAddress: record.toAddress,
-      fromChain: record.fromChain
-    }
-  ]
+  const chainData =
+    record.txList?.map((tx, index) => ({
+      key: index,
+      ...tx
+    })) || []
 
   return (
     <DrawerForm
@@ -91,13 +93,13 @@ export default function DetailDrawer({ trigger, record }: DetailDrawerProps) {
           {renderFallback(record.tradeAccountId)}
         </Descriptions.Item>
         <Descriptions.Item label={intl.formatMessage({ id: 'fundManagement.depositDetail.fromAmount' })}>
-          {formatNum(record.fromAmount, { precision: 2 })}
+          {formatNum(record.fromAmount, { precision: 2 })} {record.fromToken}
         </Descriptions.Item>
         <Descriptions.Item label={intl.formatMessage({ id: 'fundManagement.depositDetail.createdAt' })}>
-          {renderFallback(dayjs(record?.createdAt)?.format('YYYY-MM-DD HH:mm:ss'), { verify: !!record?.createdAt })}
+          {renderFallback(dayjs(record?.createdAt)?.format('YYYY.M.D HH:mm:ss'), { verify: !!record?.createdAt })}
         </Descriptions.Item>
         <Descriptions.Item label={intl.formatMessage({ id: 'fundManagement.depositDetail.status' })}>
-          <Tag color={getStatusColor(record.status)}>{getStatusLabel(record.status, intl) || renderFallback(record.status)}</Tag>
+          <Tag color={getStatusColor(record.uiStatus)}>{getStatusLabel(record.status, intl) || renderFallback(record.status)}</Tag>
         </Descriptions.Item>
       </Descriptions>
 
