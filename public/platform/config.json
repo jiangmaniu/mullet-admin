@@ -1,6 +1,8 @@
 {
   "name": "Mullet",
   "websiteUrl": "www.mullet.top",
+  "FINANCE_API_BASE_URL": "https://api.mulletfinance.xyz",
+  "ADMIN_API_KEY": "c376f1dc58c9eda30156dd2ffc8ea7929704623a8997907d23a25724c786cce0",
   "CLIENT_ID": "trade-pc-manager",
   "CLIENT_SECRET": "trade-pc-manager-secret",
   "ws": "wss://websocket.mullet.top/websocketServer",

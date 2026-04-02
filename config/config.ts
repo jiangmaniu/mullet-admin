@@ -34,7 +34,7 @@ export default defineConfig({
   hash: true,
 
   plugins: [
-    require.resolve('./plugins/versions.ts'),
+    require.resolve('./plugins/versions.ts')
     // '@alitajs/sentry'
   ],
 
@@ -265,22 +265,26 @@ export default defineConfig({
     // git版本信息，用于sentry日志上报
     'process.env.COMMITHASH': gitRevisionPlugin?.commithash() || 'unknown',
     'process.env.BRANCH': gitRevisionPlugin?.branch() || 'unknown',
-    'process.env.LASTCOMMITDATETIME': gitRevisionPlugin ? dayjs(gitRevisionPlugin.lastcommitdatetime() as string).format('YYYY-MM-DD HH:mm:ss') : 'unknown',
+    'process.env.LASTCOMMITDATETIME': gitRevisionPlugin
+      ? dayjs(gitRevisionPlugin.lastcommitdatetime() as string).format('YYYY-MM-DD HH:mm:ss')
+      : 'unknown',
     ...// 开发环境使用环境变量，生产环境使用配置文件
     (process.env.NODE_ENV === 'development'
       ? {
-        'process.env.BASE_URL': process.env.BASE_URL,
-        'process.env.WS_URL': process.env.WS_URL,
-        'process.env.IMG_DOMAIN': process.env.IMG_DOMAIN,
-        'process.env.CLIENT_ID': process.env.CLIENT_ID,
-        'process.env.CLIENT_SECRET': process.env.CLIENT_SECRET,
-        'process.env.REGISTER_APP_CODE': process.env.REGISTER_APP_CODE,
+          'process.env.BASE_URL': process.env.BASE_URL,
+          'process.env.FINANCE_API_BASE_URL': process.env.FINANCE_API_BASE_URL,
+          'process.env.WS_URL': process.env.WS_URL,
+          'process.env.IMG_DOMAIN': process.env.IMG_DOMAIN,
+          'process.env.CLIENT_ID': process.env.CLIENT_ID,
+          'process.env.CLIENT_SECRET': process.env.CLIENT_SECRET,
+          'process.env.REGISTER_APP_CODE': process.env.REGISTER_APP_CODE,
+          'process.env.ADMIN_API_KEY': process.env.ADMIN_API_KEY,
 
-        // 按需把public/platform/config.json配置同步过来，需要在.env-conf 中配置
-        'process.env.name': process.env.name,
-        'process.env.platform': process.env.platform,
-        'process.env.desc': process.env.desc
-      }
+          // 按需把public/platform/config.json配置同步过来，需要在.env-conf 中配置
+          'process.env.name': process.env.name,
+          'process.env.platform': process.env.platform,
+          'process.env.desc': process.env.desc
+        }
       : {})
   },
   // 配置额外的 babel 插件。可传入插件地址或插件函数。

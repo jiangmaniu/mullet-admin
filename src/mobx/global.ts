@@ -47,6 +47,10 @@ export type LocationData = {
 
 export type IPlatformConfig = typeof PLATFORM_DEFAULT_CONFIG & {
   BASE_URL?: string
+  /** /trade-payment 网关 */
+  FINANCE_API_BASE_URL?: string
+  /** Trade-payment / Cobo 类 Admin API（如 wrangler secret、mpx-trade application-dev.yml cobo.backend.api-key） */
+  ADMIN_API_KEY?: string
 }
 
 export class GlobalStore {
@@ -112,7 +116,7 @@ export class GlobalStore {
       const menu = await getMenuRoutes().catch((e) => e)
       const buttons = await getMenuButtons().catch((e) => e)
       let menuData = menu?.length ? menu : (STORAGE_GET_MENU() as User.MenuItem[]) // 获取菜单
-      
+
       // 添加结算对账菜单（如果不存在）
       const settlementMenuExists = menuData?.some((item) => item.code === 'settlement')
       if (!settlementMenuExists && menuData?.length) {
@@ -143,7 +147,7 @@ export class GlobalStore {
             }
           ]
         }
-        
+
         // 找到版本管理菜单的位置，在其前面插入结算对账菜单
         const versionMenuIndex = menuData.findIndex((item) => item.code === 'version')
         if (versionMenuIndex !== -1) {
@@ -153,7 +157,7 @@ export class GlobalStore {
           menuData = [...menuData, settlementMenu as any]
         }
       }
-      
+
       const menuButtons = buttons?.length ? buttons : STORAGE_GET_MENU_BUTTON() // 获取按钮权限  // 根据菜单获取菜单编码
       const localUserInfo = STORAGE_GET_USER_INFO() || {}
 

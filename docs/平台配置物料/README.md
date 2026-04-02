@@ -19,7 +19,7 @@
   // websocket地址 (必填)
   "ws": "wss://websocket.mullet.top/websocketServer",
   // 图片域名前准
-  "imgDomain": "https://file.mullet.top/trade/",
+  "imgDomain": "https://file.mullet.top/trade/"
 }
 ```
 
@@ -30,4 +30,4 @@
   - `icon-384x384.png`
   - `icon-512x512.png`
 - `platform/img` 按图片格式和大小替换图片即可
-- `platform/favicon.ico` 网站ico图标
+- `platform/favicon.ico` 网站 ico 图标

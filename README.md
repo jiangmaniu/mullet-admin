@@ -18,7 +18,7 @@ pnpm install
 
 **环境变量**
 
-- `.env-conf/mullet`  mullet 平台环境变量
+- `.env-conf/mullet` mullet 平台环境变量
 - `.env-conf/.env.lynfoo.prod` lynfoo 平台环境变量
 
 ```bash
