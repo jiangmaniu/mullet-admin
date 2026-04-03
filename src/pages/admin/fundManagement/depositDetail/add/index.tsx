@@ -1,14 +1,16 @@
 import { ProCard, ProForm, ProFormDigit, ProFormRadio, ProFormText } from '@ant-design/pro-components'
 import { FormattedMessage, history, useIntl } from '@umijs/max'
+import { useDebounceFn } from 'ahooks'
 import { Form, message, Typography } from 'antd'
 
 import PageContainer from '@/components/Admin/PageContainer'
 import { SaveButton } from '@/components/Base/Button'
+import { saveDepositFillOrder, validateTxHash } from '@/services/api/fundManagement/depositDetail'
 
 interface DepositSupplementFormValues {
-  userId: string
+  tradeAccountId: string
   tradeAccountAddress: string
-  amount: number
+  actualAmount: number
   txHash: string
   isCollected: boolean
 }
@@ -17,21 +19,63 @@ export default function DepositSupplementAdd() {
   const intl = useIntl()
   const [form] = Form.useForm()
 
+  const { run: debouncedValidate } = useDebounceFn(
+    async (txHash: string, tradeAccountId: string) => {
+      try {
+        const response = await validateTxHash({ txHash, tradeAccountId })
+
+        if (response.data && !response.data.valid) {
+          const errorMsg =
+            response.data.msg ||
+            (response.data.reason === 'WRONG_ACCOUNT'
+              ? intl.formatMessage({ id: 'fundManagement.depositSupplement.txHashWrongAccount' })
+              : intl.formatMessage({ id: 'fundManagement.depositSupplement.txHashNotInDb' }))
+          form.setFields([{ name: 'txHash', errors: [errorMsg] }])
+          return
+        }
+
+        form.setFields([{ name: 'txHash', errors: [] }])
+      } catch (error: unknown) {
+        const errorMsg = (error as { msg?: string })?.msg || intl.formatMessage({ id: 'fundManagement.depositSupplement.txHashInvalid' })
+        form.setFields([{ name: 'txHash', errors: [errorMsg] }])
+      }
+    },
+    { wait: 500 }
+  )
+
+  const triggerValidate = (changedField: 'txHash' | 'tradeAccountId') => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value?.trim()
+    const txHash = changedField === 'txHash' ? value : form.getFieldValue('txHash')?.trim()
+    const tradeAccountId = changedField === 'tradeAccountId' ? value : form.getFieldValue('tradeAccountId')?.trim()
+
+    if (changedField === 'txHash' && !value) {
+      form.setFields([{ name: 'txHash', errors: [] }])
+      return
+    }
+
+    if (txHash && tradeAccountId) {
+      debouncedValidate(txHash, tradeAccountId)
+    }
+  }
+
   const handleSubmit = async (values: DepositSupplementFormValues) => {
     try {
-      // const response = await submitDepositSupplement(values)
-      // if (response.success) {
-      //   message.success(intl.formatMessage({ id: 'fundManagement.depositSupplement.submitSuccess' }))
-      //   history.back()
-      //   return true
-      // }
-      // message.error(response.message || intl.formatMessage({ id: 'fundManagement.depositSupplement.submitFailed' }))
-      return false
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : intl.formatMessage({ id: 'fundManagement.depositSupplement.submitFailed' })
-      message.error(errorMessage)
-      return false
+      const response = await saveDepositFillOrder({
+        tradeAccountId: values.tradeAccountId,
+        tradeAccountAddress: values.tradeAccountAddress,
+        actualAmount: values.actualAmount,
+        txHash: values.txHash,
+        isCollected: values.isCollected
+      })
+
+      if (response.success) {
+        message.success(intl.formatMessage({ id: 'common.saveSuccess' }))
+        history.back()
+      } else {
+        message.error(response.msg || intl.formatMessage({ id: 'common.saveFailed' }))
+      }
+    } catch (error) {
+      message.error(intl.formatMessage({ id: 'common.saveFailed' }))
     }
   }
 
@@ -53,40 +97,38 @@ export default function DepositSupplementAdd() {
 
           <div className="grid grid-cols-2 gap-10">
             <ProFormText
-              name="userId"
-              label={<FormattedMessage id="fundManagement.depositSupplement.userId" />}
-              placeholder={intl.formatMessage({ id: 'fundManagement.depositSupplement.userIdPlaceholder' })}
-              rules={[{ required: true, message: intl.formatMessage({ id: 'fundManagement.depositSupplement.userIdRequired' }) }]}
+              name="tradeAccountId"
+              label={<FormattedMessage id="fundManagement.depositSupplement.tradeAccountId" />}
+              placeholder={intl.formatMessage({ id: 'fundManagement.depositSupplement.tradeAccountIdPlaceholder' })}
+              fieldProps={{ onChange: triggerValidate('tradeAccountId') }}
+              rules={[{ required: true, message: intl.formatMessage({ id: 'fundManagement.depositSupplement.tradeAccountIdRequired' }) }]}
             />
             <ProFormText
               name="tradeAccountAddress"
               label={<FormattedMessage id="fundManagement.depositSupplement.tradeAccountAddress" />}
               placeholder={intl.formatMessage({ id: 'fundManagement.depositSupplement.tradeAccountAddressPlaceholder' })}
               rules={[
-                { required: true, message: intl.formatMessage({ id: 'fundManagement.depositSupplement.tradeAccountAddressRequired' }) },
-                { pattern: /^0x[a-fA-F0-9]{40}$/, message: '請輸入有效的以太坊地址格式' }
+                { required: true, message: intl.formatMessage({ id: 'fundManagement.depositSupplement.tradeAccountAddressRequired' }) }
               ]}
             />
             <ProFormDigit
-              name="amount"
-              label={<FormattedMessage id="fundManagement.depositSupplement.amount" />}
-              placeholder={intl.formatMessage({ id: 'fundManagement.depositSupplement.amountPlaceholder' })}
-              fieldProps={{ precision: 2, min: 0 }}
-              rules={[{ required: true, message: intl.formatMessage({ id: 'fundManagement.depositSupplement.amountRequired' }) }]}
+              name="actualAmount"
+              label={<FormattedMessage id="fundManagement.depositSupplement.actualAmount" />}
+              placeholder={intl.formatMessage({ id: 'fundManagement.depositSupplement.actualAmountPlaceholder' })}
+              fieldProps={{ precision: 6, min: 0 }}
+              rules={[{ required: true, message: intl.formatMessage({ id: 'fundManagement.depositSupplement.actualAmountRequired' }) }]}
             />
             <ProFormText
               name="txHash"
               label={<FormattedMessage id="fundManagement.depositSupplement.txHash" />}
               placeholder={intl.formatMessage({ id: 'fundManagement.depositSupplement.txHashPlaceholder' })}
-              rules={[
-                { required: true, message: intl.formatMessage({ id: 'fundManagement.depositSupplement.txHashRequired' }) },
-                { pattern: /^0x[a-fA-F0-9]{64}$/, message: '請輸入有效的交易哈希格式' }
-              ]}
+              fieldProps={{ onChange: triggerValidate('txHash') }}
+              rules={[{ required: true, message: intl.formatMessage({ id: 'fundManagement.depositSupplement.txHashRequired' }) }]}
             />
-
             <ProFormRadio.Group
               name="isCollected"
               label={<FormattedMessage id="fundManagement.depositSupplement.isCollected" />}
+              initialValue={true}
               options={[
                 { label: intl.formatMessage({ id: 'common.yes' }), value: true },
                 { label: intl.formatMessage({ id: 'common.no' }), value: false }

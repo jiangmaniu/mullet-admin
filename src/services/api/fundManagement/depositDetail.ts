@@ -112,3 +112,83 @@ export async function getDepositDetailList(params?: DepositDetailParams) {
     params
   })
 }
+
+/**
+ * TxHash 校验参数
+ */
+export interface ValidateTxHashParams {
+  /** 链上交易 Hash */
+  txHash: string
+  /** 交易账户 ID */
+  tradeAccountId: string
+}
+
+/**
+ * TxHash 校验结果
+ */
+export interface ValidateTxHashResult {
+  /** 是否有效 */
+  valid: boolean
+  /** 失败原因：WRONG_ACCOUNT / NOT_IN_DB */
+  reason?: 'WRONG_ACCOUNT' | 'NOT_IN_DB'
+  /** 错误消息 */
+  msg?: string
+  /** 入金 ID（校验通过时返回） */
+  depositId?: string
+  /** 接收地址 */
+  toAddress?: string
+  /** 金额 */
+  amount?: string
+  /** 链 ID */
+  chainId?: string
+  /** 代币 ID */
+  tokenId?: string
+  /** 状态 */
+  status?: string
+}
+
+/**
+ * 校验 TxHash 是否属于指定交易账户
+ */
+export async function validateTxHash(params: ValidateTxHashParams) {
+  return financeRequest<ValidateTxHashResult>('/api/trade-payment/paymentApi/depositFillOrder/validateTxHash', {
+    method: 'GET',
+    params
+  })
+}
+
+/**
+ * 入金补单请求参数
+ */
+export interface DepositFillOrderParams {
+  /** 交易账户 ID */
+  tradeAccountId: string
+  /** 交易账户入金地址 */
+  tradeAccountAddress?: string
+  /** 实际入金金额（USDC，6位小数精度） */
+  actualAmount: number
+  /** 链上交易 Hash */
+  txHash?: string
+  /** 是否已归集（必填） */
+  isCollected: boolean
+  /** 补单备注（最长 500 字符） */
+  remark?: string
+}
+
+/**
+ * 入金补单响应
+ */
+export interface DepositFillOrderResult {
+  /** 补单订单号 */
+  fillOrderNo: string
+}
+
+/**
+ * 新增入金补单
+ */
+export async function saveDepositFillOrder(data: DepositFillOrderParams) {
+  return financeRequest<DepositFillOrderResult>('/api/trade-payment/paymentApi/depositFillOrder/save', {
+    method: 'POST',
+    data
+  })
+}
