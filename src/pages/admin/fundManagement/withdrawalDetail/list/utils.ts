@@ -3,7 +3,7 @@ const UI_STATUS_I18N_KEY: Record<string, string> = {
   confirmed: 'fundManagement.withdrawalDetail.statusConfirmed',
   failed: 'fundManagement.withdrawalDetail.statusFailed',
   pending: 'fundManagement.withdrawalDetail.statusPending',
-  confirming: 'fundManagement.withdrawalDetail.statusConfirming',
+  confirming: 'fundManagement.withdrawalDetail.statusConfirming'
 }
 
 const STATUS_COLOR: Record<string, string> = {

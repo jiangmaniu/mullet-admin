@@ -3,7 +3,7 @@ const UI_STATUS_I18N_KEY: Record<string, string> = {
   confirmed: 'fundManagement.depositDetail.statusConfirmed',
   failed: 'fundManagement.depositDetail.statusFailed',
   pending: 'fundManagement.depositDetail.statusPending',
-  confirming: 'fundManagement.depositDetail.statusConfirming',
+  confirming: 'fundManagement.depositDetail.statusConfirming'
 }
 
 const STATUS_COLOR: Record<string, string> = {

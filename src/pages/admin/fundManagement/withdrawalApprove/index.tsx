@@ -1,12 +1,32 @@
+import { useIntl } from '@umijs/max'
+import { Tabs } from 'antd'
+import { useState } from 'react'
+
 import PageContainer from '@/components/Admin/PageContainer'
 
+import ApprovalRecordsTab from './tabs/ApprovalRecordsTab'
+import PendingApprovalTab from './tabs/PendingApprovalTab'
+
 export default function WithdrawalApprove() {
+  const intl = useIntl()
+  const [activeTab, setActiveTab] = useState('pending')
+
+  const tabs = [
+    {
+      key: 'pending',
+      label: intl.formatMessage({ id: 'fundManagement.withdrawalApprove.pendingApproval' }),
+      children: <PendingApprovalTab />
+    },
+    {
+      key: 'records',
+      label: intl.formatMessage({ id: 'fundManagement.withdrawalApprove.approvalRecords' }),
+      children: <ApprovalRecordsTab />
+    }
+  ]
+
   return (
     <PageContainer icon="/img/emoji/4.png" pageBgColorMode="gray">
-      <div className="p-6">
-        <h2 className="text-xl font-semibold mb-4">出金审批</h2>
-        <p className="text-gray-500">页面开发中...</p>
-      </div>
+      <Tabs activeKey={activeTab} onChange={setActiveTab} items={tabs} destroyInactiveTabPane />
     </PageContainer>
   )
 }

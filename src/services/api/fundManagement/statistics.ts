@@ -97,8 +97,5 @@ export interface FundOverviewResponse {
  * 获取出入金统计总览数据
  */
 export async function getFundOverview(params?: FundOverviewParams) {
-  return financeRequest<FundOverviewResponse>(
-    '/api/trade-payment/paymentApi/stats/overview',
-    { method: 'GET', params }
-  )
+  return financeRequest<FundOverviewResponse>('/api/trade-payment/paymentApi/stats/overview', { method: 'GET', params })
 }

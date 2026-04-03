@@ -48,8 +48,5 @@ export interface FilterOptionsResponse {
  * 获取筛选选项配置
  */
 export async function getFilterOptions() {
-  return financeRequest<FilterOptionsResponse>(
-    '/api/trade-payment/paymentApi/config/filterOptions',
-    { method: 'GET' }
-  )
+  return financeRequest<FilterOptionsResponse>('/api/trade-payment/paymentApi/config/filterOptions', { method: 'GET' })
 }

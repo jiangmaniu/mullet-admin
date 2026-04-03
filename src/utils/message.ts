@@ -19,5 +19,26 @@ export const message = {
       content,
       duration: duration || 2
     })
+  },
+  success: (content: string, duration?: number) => {
+    showMessage({
+      type: 'success',
+      content,
+      duration: duration || 2
+    })
+  },
+  error: (content: string, duration?: number) => {
+    showMessage({
+      type: 'error',
+      content,
+      duration: duration || 2
+    })
+  },
+  warning: (content: string, duration?: number) => {
+    showMessage({
+      type: 'warning',
+      content,
+      duration: duration || 2
+    })
   }
 }

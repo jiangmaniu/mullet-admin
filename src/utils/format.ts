@@ -26,7 +26,7 @@ export const renderFallback = (v?: any, option?: { verify?: boolean }) => {
 export const renderFallbackPlaceholder = ({
   integerValue = 0,
   decimalValue = 0,
-  volScale,
+  volScale
 }: {
   integerValue?: number
   decimalValue?: number

@@ -181,5 +181,67 @@ export default {
     noCoinData: '暫無幣種分佈數據',
     noChannelData: '暫無通道分佈數據',
     noData: '暫無數據'
+  },
+  withdrawalApprove: {
+    // Tab 标题
+    pendingApproval: '出金待審批',
+    approvalRecords: '審批記錄',
+
+    // 表格列标题
+    approvalId: '審批記錄ID',
+    orderNo: '出金訂單ID',
+    userId: '申請用戶ID',
+    tradeAccountId: '出金賬戶ID',
+    amount: '發起數量(USDC)',
+    tokenId: '接收幣種',
+    chainId: '接收鏈網絡',
+    toAddress: '接收地址',
+    status: '審批狀態',
+    approver: '第一簽審批人',
+    approverTime: '第一簽時間',
+    approver2: '第二簽審批人',
+    approver2Time: '第二簽時間',
+    reason: '拒絕原因',
+    createTime: '發起時間',
+    actions: '操作',
+
+    // 占位符文本
+    userIdPlaceholder: '請輸入用戶ID',
+    tradeAccountIdPlaceholder: '請輸入賬戶ID',
+    toAddressPlaceholder: '請輸入接收地址',
+    chainIdPlaceholder: '請選擇鏈網絡',
+    tokenIdPlaceholder: '請選擇幣種',
+
+    // 状态文本
+    statusWait: '待審批',
+    statusSuccess: '已通過',
+    statusReject: '已拒絕',
+
+    // 按钮文本
+    approve: '通過',
+    reject: '不通過',
+
+    // 审批操作提示
+    approveConfirm: '確認通過此審批？',
+    rejectConfirm: '確認拒絕此審批？',
+    rejectReasonPlaceholder: '請輸入拒絕原因',
+    rejectReasonRequired: '請輸入拒絕原因',
+    approveSuccess: '審批通過成功',
+    rejectSuccess: '審批拒絕成功',
+    approvalFailed: '審批操作失敗',
+
+    // 拒绝弹窗
+    rejectTitle: '出金拒絕',
+    applicantUser: '申請用戶',
+    transactionInfo: '交易信息',
+    tradeAccount: '交易賬戶',
+    rejectReason: '拒絕原因',
+    save: '保存',
+    cancel: '取消',
+
+    // 审批通过弹窗
+    approveTitle: '出金審批',
+    approveConfirmMessage: '確認通過此筆出金審批？',
+    confirm: '確認'
   }
 }

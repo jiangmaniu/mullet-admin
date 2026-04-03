@@ -181,5 +181,67 @@ export default {
     noCoinData: 'No coin distribution data available',
     noChannelData: 'No channel distribution data available',
     noData: 'No data available'
+  },
+  withdrawalApprove: {
+    // Tab titles
+    pendingApproval: 'Pending Approval',
+    approvalRecords: 'Approval Records',
+
+    // Table column titles
+    approvalId: 'Approval ID',
+    orderNo: 'Withdrawal Order ID',
+    userId: 'User ID',
+    tradeAccountId: 'Account ID',
+    amount: 'Amount (USDC)',
+    tokenId: 'Token',
+    chainId: 'Chain',
+    toAddress: 'To Address',
+    status: 'Status',
+    approver: 'First Approver',
+    approverTime: 'First Approval Time',
+    approver2: 'Second Approver',
+    approver2Time: 'Second Approval Time',
+    reason: 'Reject Reason',
+    createTime: 'Created At',
+    actions: 'Actions',
+
+    // Placeholder text
+    userIdPlaceholder: 'Enter User ID',
+    tradeAccountIdPlaceholder: 'Enter Account ID',
+    toAddressPlaceholder: 'Enter To Address',
+    chainIdPlaceholder: 'Select Chain',
+    tokenIdPlaceholder: 'Select Token',
+
+    // Status text
+    statusWait: 'Pending',
+    statusSuccess: 'Approved',
+    statusReject: 'Rejected',
+
+    // Button text
+    approve: 'Approve',
+    reject: 'Reject',
+
+    // Approval operation prompts
+    approveConfirm: 'Confirm approval?',
+    rejectConfirm: 'Confirm rejection?',
+    rejectReasonPlaceholder: 'Enter rejection reason',
+    rejectReasonRequired: 'Please enter rejection reason',
+    approveSuccess: 'Approval successful',
+    rejectSuccess: 'Rejection successful',
+    approvalFailed: 'Approval operation failed',
+
+    // Reject modal
+    rejectTitle: 'Reject Withdrawal',
+    applicantUser: 'Applicant User',
+    transactionInfo: 'Transaction Info',
+    tradeAccount: 'Trade Account',
+    rejectReason: 'Rejection Reason',
+    save: 'Save',
+    cancel: 'Cancel',
+
+    // Approve modal
+    approveTitle: 'Approve Withdrawal',
+    approveConfirmMessage: 'Confirm approval of this withdrawal?',
+    confirm: 'Confirm'
   }
 }
