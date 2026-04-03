@@ -81,6 +81,68 @@ export default {
     submitSuccess: 'Supplement submitted successfully',
     submitFailed: 'Supplement submission failed'
   },
+  withdrawalDetail: {
+    // Table column titles
+    orderNo: 'Withdrawal Order ID',
+    channelOrderId: 'Channel Order ID',
+    channel: 'Payment Channel',
+    route: 'Route',
+    userId: 'User ID',
+    tradeAccountId: 'Account ID',
+    fromAddress: 'From Address',
+    toAddress: 'To Address',
+    toChain: 'To Chain',
+    toChainLabel: 'Chain',
+    toToken: 'To Token',
+    withdrawalAmount: 'Withdrawal Amount',
+    arrivedAmount: 'Arrived Amount',
+    gasFee: 'Gas Fee',
+    txHash: 'Transaction Hash',
+    txList: 'Transaction List',
+    orderStatus: 'Order Status',
+    time: 'Time',
+    statusLabel: 'Status',
+    createdAt: 'Created At',
+    completedAt: 'Completed At',
+
+    // Route types
+    routeWallet: 'Wallet',
+    routeBridge: 'Bridge',
+    routeSwap: 'Swap',
+
+    // Channel names
+    channelPrivy: 'Privy',
+    channelDebridge: 'deBridge',
+    channelJupiter: 'Jup',
+    channelRango: 'Rango',
+    channelLifi: 'LiFi',
+    channelRocketx: 'RocketX',
+
+    // Drawer
+    drawerTitle: 'Withdrawal Order Detail',
+    onChainInfo: 'On-chain Info',
+    transactionInfo: 'Transaction Info',
+    feeInfo: 'Fee Info',
+
+    // Placeholder text
+    orderNoPlaceholder: 'Enter Order ID',
+    channelOrderIdPlaceholder: 'Enter Channel Order ID',
+    channelPlaceholder: 'Select Channel',
+    userIdPlaceholder: 'Enter User ID',
+    tradeAccountIdPlaceholder: 'Enter Account ID',
+    toAddressPlaceholder: 'Enter To Address',
+    toChainPlaceholder: 'Select Chain',
+    toTokenPlaceholder: 'Select Token',
+    txHashPlaceholder: 'Enter Transaction Hash',
+    statusPlaceholder: 'Select Status',
+
+    // Status text
+    statusCompleted: 'Completed',
+    statusConfirmed: 'Confirmed',
+    statusConfirming: 'Confirming',
+    statusFailed: 'Failed',
+    statusPending: 'Pending'
+  },
   statistics: {
     // Statistic card titles
     todayDeposit: 'Today Deposit',

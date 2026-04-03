@@ -81,6 +81,68 @@ export default {
     submitSuccess: '補單提交成功',
     submitFailed: '補單提交失敗'
   },
+  withdrawalDetail: {
+    // 表格列标题
+    orderNo: '出金訂單ID',
+    channelOrderId: '通道訂單ID',
+    channel: '支付通道',
+    route: '路由',
+    userId: '用戶ID',
+    tradeAccountId: '賬戶ID',
+    fromAddress: '發起地址',
+    toAddress: '接收地址',
+    toChain: '接收網絡',
+    toChainLabel: '鏈網絡',
+    toToken: '接收幣種',
+    withdrawalAmount: '出金金額',
+    arrivedAmount: '到賬金額',
+    gasFee: 'Gas費',
+    txHash: '交易哈希',
+    txList: '交易列表',
+    orderStatus: '訂單狀態',
+    time: '時間',
+    statusLabel: '狀態',
+    createdAt: '創建時間',
+    completedAt: '完成時間',
+
+    // 路由类型
+    routeWallet: 'Wallet',
+    routeBridge: 'Bridge',
+    routeSwap: 'Swap',
+
+    // 通道名称
+    channelPrivy: 'Privy',
+    channelDebridge: 'deBridge',
+    channelJupiter: 'Jup',
+    channelRango: 'Rango',
+    channelLifi: 'LiFi',
+    channelRocketx: 'RocketX',
+
+    // 抽屉
+    drawerTitle: '出金單明細',
+    onChainInfo: '鏈上信息',
+    transactionInfo: '交易信息',
+    feeInfo: '費用信息',
+
+    // 占位符文本
+    orderNoPlaceholder: '請輸入訂單ID',
+    channelOrderIdPlaceholder: '請輸入通道訂單ID',
+    channelPlaceholder: '請選擇通道',
+    userIdPlaceholder: '請輸入用戶ID',
+    tradeAccountIdPlaceholder: '請輸入賬戶ID',
+    toAddressPlaceholder: '請輸入接收地址',
+    toChainPlaceholder: '請選擇鏈網絡',
+    toTokenPlaceholder: '請選擇幣種',
+    txHashPlaceholder: '請輸入交易哈希',
+    statusPlaceholder: '請選擇狀態',
+
+    // 状态文本
+    statusCompleted: '已完成',
+    statusConfirmed: '已確認',
+    statusConfirming: '確認中',
+    statusFailed: '失敗',
+    statusPending: '待處理'
+  },
   statistics: {
     // 统计卡片标题
     todayDeposit: '今日入金',
