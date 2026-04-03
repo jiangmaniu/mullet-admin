@@ -1009,10 +1009,18 @@ export default [
       },
       {
         path: '/:lng/fund-management/deposit-detail',
-        component: './admin/fundManagement/depositDetail',
+        component: './admin/fundManagement/depositDetail/list',
         name: 'deposit-detail',
         access: 'canAdmin',
         code: 'fund-management:deposit-detail'
+      },
+      {
+        path: '/:lng/fund-management/deposit-detail/add',
+        component: './admin/fundManagement/depositDetail/add',
+        name: 'deposit-detail',
+        hideInMenu: true,
+        access: 'canAdmin',
+        code: 'fund-management:deposit-detail:add'
       },
       {
         path: '/:lng/fund-management/withdrawal-approve',
@@ -1023,7 +1031,7 @@ export default [
       },
       {
         path: '/:lng/fund-management/withdrawal-detail',
-        component: './admin/fundManagement/withdrawalDetail',
+        component: './admin/fundManagement/withdrawalDetail/list',
         name: 'withdrawal-detail',
         access: 'canAdmin',
         code: 'fund-management:withdrawal-detail'

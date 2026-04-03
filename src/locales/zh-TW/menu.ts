@@ -97,9 +97,11 @@ export default {
   'menu.fund-management': '出入金管理',
   'menu.fund-management.statistics': '出入金統計',
   'menu.fund-management.deposit-detail': '入金明細',
+  'menu.fund-management.deposit-detail.add': '入金補單',
   'menu.fund-management.withdrawal-approve': '出金審批',
   'menu.fund-management.withdrawal-detail': '出金明細',
   'menu.fund-management.deposit-supplement-detail': '入金補單明細',
+  'menu.fund-management.deposit-supplement-detail.add': '入金補單',
   // 跨链交易管理
   'menu.fund-management.cross-chain': '跨鏈交易管理',
   'menu.fund-management.cross-chain.transaction-detail': '跨鏈交易明細',

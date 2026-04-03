@@ -2822,6 +2822,48 @@ export default {
           categoryName: null,
           actionName: null,
           isOpenName: null
+        },
+        {
+          id: '2001000000000000010',
+          parentId: '0',
+          code: 'fund-management:deposit-detail',
+          name: '入金明细',
+          alias: 'deposit-detail',
+          path: '/fund-management/deposit-detail',
+          source: 'iconfont iconicon_compile',
+          component: null,
+          sort: 15,
+          category: null,
+          action: 0,
+          isOpen: null,
+          remark: null,
+          isDeleted: null,
+          children: [
+            {
+              id: '2001000000000000011',
+              parentId: '2001000000000000010',
+              code: 'fund-management:deposit-detail:add',
+              name: '新增',
+              alias: 'add',
+              path: '/fund-management/deposit-detail/add',
+              source: 'iconfont iconicon_compile',
+              component: null,
+              sort: 1,
+              category: null,
+              action: 0,
+              isOpen: null,
+              remark: null,
+              isDeleted: null,
+              parentName: null,
+              categoryName: null,
+              actionName: null,
+              isOpenName: null
+            }
+          ],
+          parentName: null,
+          categoryName: null,
+          actionName: null,
+          isOpenName: null
         }
       ],
       msg: '操作成功'

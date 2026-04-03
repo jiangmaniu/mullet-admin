@@ -92,5 +92,28 @@ export default {
   'menu.agent.agent-withdrawal-record': 'IB Withdrawal Record',
   'menu.version': 'Version Management',
   'menu.activity': 'Activity Management',
-  'menu.activity.first-charge-activity': 'First Charge Activity'
+  'menu.activity.first-charge-activity': 'First Charge Activity',
+  // Fund Management
+  'menu.fund-management': 'Fund Management',
+  'menu.fund-management.statistics': 'Deposit/Withdrawal Statistics',
+  'menu.fund-management.deposit-detail': 'Deposit Details',
+  'menu.fund-management.deposit-detail.add': 'Deposit Supplement',
+  'menu.fund-management.withdrawal-approve': 'Withdrawal Approval',
+  'menu.fund-management.withdrawal-detail': 'Withdrawal Details',
+  'menu.fund-management.deposit-supplement-detail': 'Deposit Supplement Details',
+  'menu.fund-management.deposit-supplement-detail.add': 'Deposit Supplement',
+  // Cross-chain Transaction Management
+  'menu.fund-management.cross-chain': 'Cross-chain Transaction Management',
+  'menu.fund-management.cross-chain.transaction-detail': 'Cross-chain Transaction Details',
+  'menu.fund-management.cross-chain.pending-transaction': 'Pending Cross-chain Transactions',
+  // Swap Transaction Management
+  'menu.fund-management.swap-trading': 'Swap Transaction Management',
+  'menu.fund-management.swap-trading.transaction-detail': 'Swap Transaction Details',
+  'menu.fund-management.swap-trading.pending-transaction': 'Pending Swap Transactions',
+  // Fund Exception Records
+  'menu.fund-management.fund-exception': 'Fund Exception Records',
+  // Fund Configuration
+  'menu.fund-management.fund-config': 'Fund Configuration',
+  // Channel Management
+  'menu.fund-management.channel-management': 'Channel Management'
 }

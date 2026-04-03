@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons'
+import { FormattedMessage, history, useIntl } from '@umijs/max'
 import { useRequest } from 'ahooks'
-import { FormattedMessage, useIntl } from '@umijs/max'
 import { useMemo, useRef } from 'react'
 
 import PageContainer from '@/components/Admin/PageContainer'
@@ -14,7 +14,6 @@ import { getColumns } from './tableConfig'
 export default function DepositDetail() {
   const intl = useIntl()
   const instanceRef = useRef<Instance>()
-  const modalRef = useRef<any>()
 
   // 获取筛选选项配置
   const { data: filterOptionsResponse, loading: filterOptionsLoading } = useRequest(getFilterOptions)
@@ -72,7 +71,11 @@ export default function DepositDetail() {
           hideOnSinglePage: false
         }}
         tableExtraRender={() => (
-          <AddButton type="primary" icon={<PlusOutlined />} onClick={() => modalRef.current?.show()}>
+          <AddButton
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => history.push(`/${intl.locale}/fund-management/deposit-detail/add`)}
+          >
             <FormattedMessage id="fundManagement.depositDetail.supplementOrder" />
           </AddButton>
         )}
